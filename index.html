@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interview Scorecard — Eccles MBA Structured Interview Toolkit</title>
+<style>
+  :root{
+    --red:#CC0000; --red-dk:#890000; --black:#1A1A1A; --ink:#262626;
+    --muted:#6B6B6B; --gray:#708E99; --gray-lt:#E2E6E6; --paper:#FFFFFF;
+    --tint:#F7F3F3; --green:#3B6D11; --amber:#854F0B; --blue:#185FA5;
+    --sans:'Source Sans 3','Myriad Pro',system-ui,-apple-system,sans-serif;
+    --serif:'Source Serif 4','Kepler',Georgia,serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:var(--sans);color:var(--ink);background:#FAFAFA;font-size:15px;line-height:1.55}
+  .wrap{max-width:920px;margin:0 auto;padding:0 16px 120px}
+  a{color:var(--red-dk)}
+  /* Header */
+  header{border-top:5px solid var(--red);background:var(--paper);border-bottom:1px solid var(--gray-lt);padding:20px 24px 16px;margin:0 -16px 20px}
+  .brandrow{display:flex;align-items:center;gap:14px}
+  .ublock{width:46px;height:46px;background:var(--red);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:26px;font-family:var(--serif);flex:none}
+  .eyebrow{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--red);font-weight:700}
+  h1{font-family:var(--serif);font-size:24px;font-weight:600;color:var(--black);margin:2px 0 0;line-height:1.1}
+  .sub{font-size:13px;color:var(--muted);margin-top:8px}
+  h2{font-family:var(--serif);font-size:18px;color:var(--black);margin:0 0 10px}
+  /* Cards */
+  .card{background:var(--paper);border:1px solid var(--gray-lt);border-radius:10px;padding:18px 20px;margin-bottom:16px}
+  .card.accent{border-left:4px solid var(--red)}
+  label{display:block;font-size:12.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px}
+  input[type=text],select,textarea{width:100%;font-family:var(--sans);font-size:14.5px;color:var(--ink);border:1px solid var(--gray-lt);border-radius:7px;padding:8px 10px;background:#fff}
+  textarea{min-height:70px;resize:vertical}
+  input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--blue);outline-offset:1px}
+  .grid{display:grid;gap:14px}
+  .g2{grid-template-columns:1fr 1fr}
+  .g3{grid-template-columns:1fr 1fr 1fr}
+  @media(max-width:640px){.g2,.g3{grid-template-columns:1fr}}
+  .field{min-width:0}
+  /* Chips */
+  .chip{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;border-radius:20px;padding:2px 10px;vertical-align:middle}
+  .chip.gate{background:var(--red-dk);color:#fff}
+  .chip.mba{background:var(--tint);color:var(--red-dk);border:1px solid var(--red-dk)}
+  .chip.role{background:#EEF3F6;color:var(--blue);border:1px solid var(--blue)}
+  .chip.ok{background:#EDF3E6;color:var(--green);border:1px solid var(--green)}
+  .chip.warn{background:#FBF3E8;color:var(--amber);border:1px solid var(--amber)}
+  /* Pack loader */
+  .packrow{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+  .btn{font-family:var(--sans);font-size:14px;font-weight:600;border-radius:7px;padding:9px 16px;cursor:pointer;border:1px solid var(--gray-lt);background:#fff;color:var(--ink)}
+  .btn.primary{background:var(--red);border-color:var(--red);color:#fff}
+  .btn.primary:hover{background:var(--red-dk)}
+  .btn:hover{border-color:var(--gray)}
+  .btn.danger{color:var(--red-dk);border-color:var(--red-dk)}
+  /* Competency card */
+  .comp{background:var(--paper);border:1px solid var(--gray-lt);border-radius:10px;margin-bottom:16px;overflow:hidden}
+  .comp-head{padding:14px 18px 10px;border-bottom:1px solid var(--gray-lt);background:var(--tint)}
+  .comp-head h3{margin:0;font-family:var(--serif);font-size:17px;color:var(--black);display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .comp-def{font-size:13px;color:var(--muted);margin-top:4px;font-style:italic}
+  .comp-body{padding:14px 18px 18px}
+  .qblock{margin-bottom:12px}
+  .qline{margin:0 0 7px;padding-left:10px;border-left:3px solid var(--gray-lt)}
+  .qline b{color:var(--red-dk);font-size:12px;text-transform:uppercase;letter-spacing:.5px;display:block}
+  details{margin:8px 0}
+  summary{cursor:pointer;font-weight:600;font-size:13.5px;color:var(--blue)}
+  .sig{font-size:13.5px;margin:6px 0}
+  .sig.rf b{color:var(--red-dk)} .sig.ss b{color:var(--green)}
+  .nopack{background:#FBF3E8;border:1px dashed var(--amber);color:var(--amber);border-radius:7px;padding:10px 12px;font-size:13.5px}
+  /* BARS strip */
+  .bars{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0 4px}
+  @media(max-width:560px){.bars{grid-template-columns:1fr 1fr}}
+  .bar{border:1.5px solid var(--gray-lt);border-radius:8px;background:#fff;padding:8px 8px;cursor:pointer;text-align:left;font-family:var(--sans)}
+  .bar .n{font-family:var(--serif);font-weight:700;font-size:18px;color:var(--black)}
+  .bar .l{display:block;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--muted)}
+  .bar[aria-pressed="true"]{border-color:var(--red);background:var(--tint)}
+  .bar[aria-pressed="true"] .n,.bar[aria-pressed="true"] .l{color:var(--red-dk)}
+  .anchor{font-size:13px;color:var(--ink);background:var(--tint);border-radius:7px;padding:9px 12px;min-height:40px;margin-bottom:10px}
+  .anchor .lvl{font-weight:700;color:var(--red-dk)}
+  .riskrow{display:flex;gap:10px;align-items:flex-start;margin-top:10px}
+  .riskrow input[type=checkbox]{width:18px;height:18px;margin-top:2px;flex:none}
+  .riskrow .rl{font-size:13.5px;font-weight:600}
+  /* Summary */
+  .summary{position:sticky;bottom:0;background:var(--black);color:#fff;margin:0 -16px;padding:12px 20px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;font-size:14px;z-index:5}
+  .summary .big{font-family:var(--serif);font-size:22px;font-weight:700}
+  .summary .bandlbl{font-weight:700}
+  .band-exc{color:#8FD46A}.band-str{color:#B9E28C}.band-meet{color:#F4E285}.band-mix{color:#F4B860}.band-below{color:#F08080}
+  .gatewarn{background:var(--red-dk);color:#fff;border-radius:8px;padding:10px 14px;font-weight:600;margin:10px 0}
+  .amberwarn{background:#FBF3E8;color:var(--amber);border:1px solid var(--amber);border-radius:8px;padding:10px 14px;font-weight:600;margin:10px 0}
+  .note{font-size:12.5px;color:var(--muted)}
+  .exports{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  footer{margin-top:30px;font-size:12px;color:var(--muted);border-top:1px solid var(--gray-lt);padding-top:14px}
+  /* Print */
+  @media print{
+    body{background:#fff;font-size:12px}
+    .no-print, .summary select, .exports, .packrow, .bars{display:none !important}
+    .summary{position:static;background:#fff;color:var(--ink);border-top:2px solid var(--red)}
+    .comp,.card{break-inside:avoid;border-color:#bbb}
+    textarea{border:none;padding:0;min-height:0}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="brandrow">
+    <div class="ublock" aria-hidden="true">U</div>
+    <div>
+      <div class="eyebrow">David Eccles School of Business — Full-Time MBA</div>
+      <h1>Interview Scorecard</h1>
+    </div>
+  </div>
+  <div class="sub">Structured, competency-based interviewing for MBA-level roles. Select a role and stage, load your employer question pack, and score against the behavioral anchors — evidence over opinion. <a href="student_playbook.html">Candidates: see the Interview Prep Playbook</a>.</div>
+</header>
+
+<section class="card accent" aria-labelledby="setupH">
+  <h2 id="setupH">Interview setup</h2>
+  <div class="grid g3">
+    <div class="field"><label for="role">Role</label>
+      <select id="role"></select></div>
+    <div class="field"><label for="stage">Interview stage</label>
+      <select id="stage">
+        <option value="screen">1 — Initial Screen (20–30 min)</option>
+        <option value="hm">2 — Hiring Manager / Leader (45–60 min)</option>
+        <option value="panel">3 — Team / Panel (60–90 min)</option>
+        <option value="final">4 — Final / Readiness (30–45 min)</option>
+      </select></div>
+    <div class="field"><label for="idate">Date</label><input type="text" id="idate"></div>
+  </div>
+  <div class="grid g2" style="margin-top:12px">
+    <div class="field"><label for="cand">Candidate</label><input type="text" id="cand" autocomplete="off"></div>
+    <div class="field"><label for="ivr">Interviewer</label><input type="text" id="ivr" autocomplete="off"></div>
+  </div>
+  <div class="packrow" style="margin-top:14px">
+    <button class="btn primary" id="packBtn" type="button">Load question pack</button>
+    <input type="file" id="packFile" accept=".json" class="sr-only" aria-label="Load employer question pack (JSON file)">
+    <span id="packStatus" class="chip warn">No pack loaded — questions hidden</span>
+    <span class="note">The question pack is a confidential employer file provided by Eccles Career Services. This public page contains the framework and rubric only.</span>
+  </div>
+</section>
+
+<div id="roleMeta" class="card" hidden></div>
+
+<div id="board" aria-live="off"></div>
+
+<section class="card" aria-labelledby="recH">
+  <h2 id="recH">Overall assessment</h2>
+  <div id="warnings" aria-live="polite"></div>
+  <div class="grid g3">
+    <div class="field"><label for="rec">Recommendation</label>
+      <select id="rec"><option value="">—</option><option>Advance</option><option>Hold</option><option>Decline</option></select></div>
+    <div class="field"><label for="conf">Confidence in this assessment</label>
+      <select id="conf"><option value="">—</option><option>High</option><option>Medium</option><option>Low</option></select></div>
+    <div class="field"><label for="cx">Candidate experience notes</label><input type="text" id="cx"></div>
+  </div>
+  <p class="note" style="margin-top:10px">Confidence describes your evidence, not the candidate: a strong candidate assessed in a rushed interview is a high score with low confidence. Submit this scorecard before any discussion with other interviewers.</p>
+  <div class="exports no-print">
+    <button class="btn" type="button" onclick="window.print()">Print / Save PDF</button>
+    <button class="btn" type="button" id="copyBtn">Copy as text</button>
+    <button class="btn" type="button" id="csvBtn">Download CSV</button>
+    <button class="btn danger" type="button" id="clearBtn">Clear this interview</button>
+  </div>
+  <p class="note">Autosaves to this browser only — nothing is sent anywhere. On a shared machine, export and then use “Clear this interview” to remove the candidate's data.</p>
+</section>
+
+<div class="summary" role="status" aria-live="polite" id="sumbar">
+  <span>Scored <span id="sScored" class="big">0</span>/<span id="sTotal">0</span></span>
+  <span>Total <span id="sPct" class="big">—</span></span>
+  <span id="sBand" class="bandlbl">Score all assigned competencies</span>
+  <span id="sGate"></span>
+</div>
+
+<footer>
+  Eccles MBA Structured Interview Toolkit · Interview Scorecard v1.0 · This tool implements the framework in the <em>Employer Edition</em> guide (4-point behaviorally anchored scale; gate rules; percentage thresholds). It is an adaptable framework, not a certification — hiring decisions and compliance remain with the employer. © University of Utah, David Eccles School of Business.
+</footer>
+
+</div>
+
+<script>
+"use strict";
+// ══════════════ PUBLIC DATA (framework + rubric only — no interview questions) ══════════════
+const BARS = [
+  {n:1,l:"Does Not Meet",a:"No clear example. Vague, theoretical, or irrelevant answer. Little evidence of ownership; cannot explain impact. Hiring risk."},
+  {n:2,l:"Partially Meets",a:"Basic, real example with some relevant actions. Limited complexity or measurable impact; ownership needed probing. Viable only with support."},
+  {n:3,l:"Meets",a:"Clear, relevant example. Ownership, judgment, structured thinking; communicates trade-offs; credible outcome or learning. Ready for role expectations."},
+  {n:4,l:"Exceeds",a:"High-complexity example with strong impact. Leadership beyond authority; a repeatable method; influences stakeholders and elevates others."},
+];
+const DEVMAP = {1:"Advanced Beginner (1–2)",2:"Competent (3–5)",3:"Proficient (6–8)",4:"Expert (9–10)"};
+
+const DEFS = {
+  // Eccles MBA Competency Model (src: mba)
+  "Strategic Alignment":{src:"mba",code:"SCT 1",def:"Develop action plans that align with organizational goals and strategic priorities."},
+  "Strategic Planning":{src:"mba",code:"SCT 2",def:"Use strategic planning and critical thinking to discern among alternatives and devise recommendations."},
+  "Comprehensive Analysis":{src:"mba",code:"SCT 3",def:"Analyze complex situations by identifying and accounting for controllable and uncontrollable factors."},
+  "Relationship Development":{src:"mba",code:"RMT 1",def:"Engage in and maintain positive relationships with individuals and teams."},
+  "Effective Participation":{src:"mba",code:"RMT 2",def:"Participate effectively as a member of teams, as both leader and member."},
+  "Group Facilitation":{src:"mba",code:"RMT 3",def:"Facilitate a group and motivate individuals to work together in teams."},
+  "Stakeholder Management":{src:"mba",code:"LE 1",def:"Balance diverse interests to align individuals and groups to an organization's mission and strategic goals."},
+  "Principled Leadership":{src:"mba",code:"LE 2",def:"Use principle-based leadership to ensure ethical decision-making and effective management."},
+  "Adaptability & Change Leadership":{src:"mba",code:"LE 3",def:"Navigate ambiguity and lead individuals or teams through transitions using effective change management and coaching principles."},
+  "Emotional Intelligence":{src:"mba",code:"LE 4",def:"Demonstrate emotional intelligence through self-awareness, empathy, and interpersonal insight."},
+  "Ethical Advocacy":{src:"mba",code:"LE 5",def:"Take a stand on ethical issues to uphold professional, personal, and organizational integrity."},
+  "Financial and Accounting Acumen":{src:"mba",code:"BKS 1",def:"Interpret, explain, and use financial and accounting information to make decisions."},
+  "Data Analytics":{src:"mba",code:"BKS 2",def:"Utilize analytics to assess trends, support decision-making, and improve outcomes."},
+  "Operations":{src:"mba",code:"BKS 3",def:"Use fundamental principles of operations management and problem-solving as a basis for action and leadership."},
+  "Market Analysis":{src:"mba",code:"BKS 4",def:"Evaluate industry trends, competitive landscapes, and consumer dynamics to identify strategic opportunities."},
+  "Economy Knowledge":{src:"mba",code:"BKS 5",def:"Demonstrate knowledge of economic indicators, market forces, and fiscal policies and their impact on strategy."},
+  "Strategic Networks":{src:"mba",code:"BKS 6",def:"Engages in network development, professional organizations, and skill-set development in areas of career interest."},
+  "Technical Agility":{src:"mba",code:"BKS 7",def:"Adapt to and leverage emerging technologies and digital tools to solve complex business challenges."},
+  "Articulation":{src:"mba",code:"C 1",def:"Communicate clearly and effectively through verbal and written formats."},
+  "Presentation":{src:"mba",code:"C 2",def:"Prepare and deliver clear, concise, and applicable business presentations."},
+  "Interpersonal Communication":{src:"mba",code:"C 3",def:"Demonstrate interpersonal communication through listening, hearing, and responding effectively to others."},
+  "Crucial Conversations":{src:"mba",code:"C 4",def:"Recognize when crucial conversations are needed and effectively navigate and lead them."},
+  // Plug-and-play role competencies (src: role)
+  "Drives Results":{src:"role",def:"Consistently achieves results, even under tough circumstances."},
+  "Manages Complexity":{src:"role",def:"Makes sense of high-volume and sometimes contradictory information to solve problems."},
+  "Customer Focus":{src:"role",def:"Builds strong customer relationships and delivers customer-centric solutions."},
+  "Manages Ambiguity":{src:"role",def:"Operates effectively when the path forward is unclear; makes progress without all the answers."},
+  "Persuades":{src:"role",def:"Uses compelling arguments to gain the support and commitment of others."},
+  "Decision Quality":{src:"role",def:"Makes well-informed, timely decisions that keep the organization moving forward."},
+  "Nimble Learning":{src:"role",def:"Learns quickly when facing new situations; experiments to find workable solutions."},
+  "Plans and Aligns":{src:"role",def:"Plans and prioritizes work to meet commitments aligned with organizational goals."},
+  "Ensures Accountability":{src:"role",def:"Holds self and others to clear commitments; sets standards, tracks progress, and addresses slippage early."},
+  "Being Resilient":{src:"role",def:"Rebounds from setbacks and adversity when facing difficult situations."},
+  "Action Oriented":{src:"role",def:"Takes on new opportunities and tough challenges with urgency, energy, and enthusiasm."},
+  "Cultivates Innovation":{src:"role",def:"Creates new and better ways for the organization to be successful."},
+  "Collaborates":{src:"role",def:"Builds partnerships and works across boundaries to achieve shared objectives."},
+  "Optimizes Work Processes":{src:"role",def:"Knows the most effective and efficient processes to get things done, with continuous improvement focus."},
+  "Directs Work":{src:"role",def:"Provides clear direction, delegates appropriately, and removes obstacles so work gets done."},
+  "Business Insight":{src:"role",def:"Applies knowledge of the business, market, and value drivers to advance goals and decisions."},
+  "Instills Trust":{src:"role",def:"Gains the confidence of others through honesty, integrity, and authenticity."},
+  "Situational Adaptability":{src:"role",def:"Adapts approach and demeanor in real time to match the shifting demands of different situations."},
+};
+
+// Roles: competency set, gatekeepers, and stage map (gatekeepers assessed in two stages)
+const ROLES = {
+  consultant:{label:"Management Consultant",gates:["Comprehensive Analysis","Manages Complexity"],
+    stages:{screen:["Presentation"],hm:["Strategic Planning","Comprehensive Analysis"],
+      panel:["Comprehensive Analysis","Manages Complexity","Manages Ambiguity"],final:["Persuades","Manages Complexity"]}},
+  product:{label:"Product Manager",gates:["Customer Focus","Stakeholder Management"],
+    stages:{screen:["Nimble Learning"],hm:["Strategic Alignment","Customer Focus"],
+      panel:["Stakeholder Management","Data Analytics","Customer Focus"],final:["Decision Quality","Stakeholder Management"]}},
+  fpa:{label:"Corporate Finance / FP&A",gates:["Financial and Accounting Acumen"],
+    stages:{screen:["Articulation"],hm:["Financial and Accounting Acumen","Comprehensive Analysis"],
+      panel:["Plans and Aligns","Drives Results","Financial and Accounting Acumen"],final:["Ensures Accountability"]}},
+  ib:{label:"Investment Banking Associate",gates:["Financial and Accounting Acumen","Being Resilient"],
+    stages:{screen:["Presentation"],hm:["Financial and Accounting Acumen","Drives Results"],
+      panel:["Being Resilient","Action Oriented","Financial and Accounting Acumen"],final:["Ensures Accountability","Being Resilient"]}},
+  marketing:{label:"Brand / Marketing Manager",gates:["Market Analysis","Customer Focus"],
+    stages:{screen:["Presentation"],hm:["Market Analysis","Customer Focus"],
+      panel:["Data Analytics","Cultivates Innovation","Market Analysis"],final:["Collaborates","Customer Focus"]}},
+  ops:{label:"Operations & Supply Chain Manager",gates:["Operations","Optimizes Work Processes"],
+    stages:{screen:["Adaptability & Change Leadership"],hm:["Operations","Comprehensive Analysis"],
+      panel:["Optimizes Work Processes","Directs Work","Operations"],final:["Ensures Accountability","Optimizes Work Processes"]}},
+  strategy:{label:"Corporate Strategy / BizOps",gates:["Strategic Planning","Manages Ambiguity"],
+    stages:{screen:["Persuades"],hm:["Strategic Planning","Business Insight"],
+      panel:["Market Analysis","Manages Ambiguity","Strategic Planning"],final:["Strategic Alignment","Manages Ambiguity"]}},
+  bizdev:{label:"Business Development Manager",gates:["Persuades","Drives Results"],
+    stages:{screen:["Strategic Networks"],hm:["Persuades","Drives Results"],
+      panel:["Stakeholder Management","Crucial Conversations","Persuades"],final:["Instills Trust","Drives Results"]}},
+  analytics:{label:"Analytics / BI Manager",gates:["Data Analytics","Articulation"],
+    stages:{screen:["Articulation"],hm:["Data Analytics","Manages Complexity"],
+      panel:["Technical Agility","Decision Quality","Data Analytics"],final:["Nimble Learning","Articulation"]}},
+  ldp:{label:"Leadership Development Program (General Mgmt)",gates:["Adaptability & Change Leadership","Nimble Learning"],
+    stages:{screen:["Situational Adaptability"],hm:["Adaptability & Change Leadership","Drives Results"],
+      panel:["Effective Participation","Nimble Learning","Adaptability & Change Leadership"],final:["Emotional Intelligence","Nimble Learning"]}},
+};
+const STAGE_LABEL = {screen:"Initial Screen",hm:"Hiring Manager / Leader",panel:"Team / Panel",final:"Final / Readiness"};
+
+// ══════════════ STATE ══════════════
+let PACK = null;                     // employer question pack (loaded from file)
+let state = { role:"consultant", stage:"screen", cand:"", ivr:"", date:new Date().toLocaleDateString(),
+              rec:"", conf:"", cx:"", scores:{} }; // scores keyed role|stage|comp -> {score,notes,risk,riskNote}
+const LS_KEY = "eccles-interview-scorecard-v1";
+
+function skey(comp){ return state.role+"|"+state.stage+"|"+comp; }
+function esc(s){ return String(s).replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+
+function save(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); }catch(e){} }
+function load(){ try{ const s = JSON.parse(localStorage.getItem(LS_KEY)); if(s && s.scores) state = Object.assign(state, s); }catch(e){} }
+
+// ══════════════ RENDER ══════════════
+const $ = id => document.getElementById(id);
+
+function renderRoleOptions(){
+  $("role").innerHTML = Object.entries(ROLES).map(([id,r])=>`<option value="${id}">${esc(r.label)}</option>`).join("");
+}
+
+function renderMeta(){
+  const r = ROLES[state.role];
+  const all = [...new Set(Object.values(r.stages).flat())];
+  $("roleMeta").hidden = false;
+  $("roleMeta").innerHTML =
+    `<h2>${esc(r.label)} — competency map</h2>
+     <p class="note" style="margin-top:0">Competency set for this role (5–7 total; gatekeepers are assessed in two stages — a score of 1 on a gatekeeper ends the candidacy regardless of total):</p>
+     <p>${all.map(c=>{
+        const d = DEFS[c]||{}; const gate = r.gates.includes(c);
+        return `<span class="chip ${d.src==="mba"?"mba":"role"}" title="${esc(d.def||"")}">${esc(c)}</span>${gate?' <span class="chip gate">Gate</span>':""}`;
+      }).join(" &nbsp; ")}</p>
+     <p class="note">This stage (<b>${STAGE_LABEL[state.stage]}</b>) assesses: ${r.stages[state.stage].map(esc).join(" · ")}${state.stage==="screen"?" — plus role motivation questions from the question pack.":""}</p>`;
+}
+
+function questionBlock(comp){
+  if(!PACK) return `<div class="nopack">Questions are in the employer question pack — load it above. The rubric below works without it.</div>`;
+  const q = PACK.competencies && PACK.competencies[comp];
+  if(!q) return `<div class="nopack">This competency is not in the loaded pack. Generate a set with the Appendix D template in the Employer Edition guide.</div>`;
+  return `<div class="qblock">
+    <p class="qline"><b>Behavioral 1</b>${esc(q.b1)}</p>
+    <p class="qline"><b>Behavioral 2</b>${esc(q.b2)}</p>
+    <p class="qline"><b>Situational</b>${esc(q.s)}</p>
+    <details><summary>Probes</summary><p class="sig">${esc(q.probes)}</p></details>
+    <p class="sig rf"><b>Red flags:</b> ${esc(q.rf)}</p>
+    <p class="sig ss"><b>Strong signals:</b> ${esc(q.ss)}</p>
+  </div>`;
+}
+
+function screenBlock(){
+  if(state.stage!=="screen") return "";
+  let inner;
+  if(!PACK) inner = `<div class="nopack">Role motivation questions are in the employer question pack — load it above.</div>`;
+  else {
+    const qs = (PACK.screens && PACK.screens[state.role]) || [];
+    inner = qs.map((q,i)=>`<p class="qline"><b>Motivation ${i+1}</b>${esc(q)}</p>`).join("") ||
+            `<div class="nopack">No screen questions found for this role in the pack.</div>`;
+  }
+  return `<div class="comp"><div class="comp-head"><h3>Role motivation &amp; clarity <span class="chip role">Screen</span></h3>
+    <div class="comp-def">Asked of every candidate at the screen. Capture the response in the evidence notes of the competency below — motivation is context, not a scored competency.</div></div>
+    <div class="comp-body">${inner}</div></div>`;
+}
+
+function compCard(comp){
+  const d = DEFS[comp]||{def:""};
+  const r = ROLES[state.role];
+  const gate = r.gates.includes(comp);
+  const st = state.scores[skey(comp)] || {};
+  const barBtns = BARS.map(b=>`
+    <button type="button" class="bar" data-comp="${esc(comp)}" data-score="${b.n}"
+      aria-pressed="${st.score===b.n}" aria-label="Score ${b.n}, ${b.l}, for ${esc(comp)}">
+      <span class="n">${b.n}</span><span class="l">${b.l}</span></button>`).join("");
+  const sel = BARS.find(b=>b.n===st.score);
+  const anchor = sel
+    ? `<span class="lvl">${sel.n} — ${sel.l}${d.src==="mba" ? " · maps to "+DEVMAP[sel.n] : ""}:</span> ${sel.a}`
+    : `Tap a score to see its behavioral anchor. Score against the anchors — not against other candidates.`;
+  return `<div class="comp">
+    <div class="comp-head"><h3>${d.code?esc(d.code)+" — ":""}${esc(comp)}
+      <span class="chip ${d.src==="mba"?"mba":"role"}">${d.src==="mba"?"MBA Model":"Role"}</span>
+      ${gate?'<span class="chip gate">Gatekeeper</span>':""}</h3>
+      <div class="comp-def">${esc(d.def)}</div></div>
+    <div class="comp-body">
+      ${questionBlock(comp)}
+      <div class="bars" role="group" aria-label="Score for ${esc(comp)}">${barBtns}</div>
+      <div class="anchor" aria-live="polite">${anchor}</div>
+      <label for="ev-${cssId(comp)}">Evidence notes (near-verbatim — what did the candidate say or do?)</label>
+      <textarea id="ev-${cssId(comp)}" data-comp="${esc(comp)}" data-field="notes">${esc(st.notes||"")}</textarea>
+      <div class="riskrow">
+        <input type="checkbox" id="rk-${cssId(comp)}" data-comp="${esc(comp)}" data-field="risk" ${st.risk?"checked":""}>
+        <div style="flex:1"><label class="rl" for="rk-${cssId(comp)}" style="text-transform:none;letter-spacing:0">Risk flag (including overuse patterns)</label>
+        <input type="text" id="rn-${cssId(comp)}" data-comp="${esc(comp)}" data-field="riskNote" placeholder="What is the evidence for the risk?" value="${esc(st.riskNote||"")}" ${st.risk?"":"hidden"}></div>
+      </div>
+    </div></div>`;
+}
+function cssId(s){ return s.toLowerCase().replace(/[^a-z0-9]+/g,"-"); }
+
+function renderBoard(){
+  const comps = ROLES[state.role].stages[state.stage];
+  $("board").innerHTML = screenBlock() + comps.map(compCard).join("");
+  renderMeta(); renderSummary();
+}
+
+function currentScores(){
+  const comps = ROLES[state.role].stages[state.stage];
+  return comps.map(c=>({comp:c, gate:ROLES[state.role].gates.includes(c), ...(state.scores[skey(c)]||{})}));
+}
+
+function renderSummary(){
+  const rows = currentScores();
+  const scored = rows.filter(r=>r.score);
+  $("sScored").textContent = scored.length; $("sTotal").textContent = rows.length;
+  const warnings = [];
+  let pctText = "—", bandText = "Score all assigned competencies", bandClass = "";
+  const gated = scored.filter(r=>r.gate && r.score===1);
+  if(gated.length) warnings.push(`<div class="gatewarn">Gate rule triggered: score of 1 on gatekeeper — ${gated.map(g=>esc(g.comp)).join(", ")}. Do not advance regardless of total. Document the evidence.</div>`);
+  const risks = rows.filter(r=>r.risk);
+  if(risks.length>=2) warnings.push(`<div class="amberwarn">${risks.length} risk flags — hiring-manager review required before advancing.</div>`);
+  if(scored.length){
+    const pct = Math.round(100*scored.reduce((a,r)=>a+r.score,0)/(scored.length*4));
+    pctText = pct+"%";
+    const band = gated.length ? {t:"Do Not Advance (gate)",c:"band-below"} :
+      pct>=90?{t:"Exceptional — priority advance",c:"band-exc"}:
+      pct>=80?{t:"Strong — advance",c:"band-str"}:
+      pct>=70?{t:"Meets bar — advance with discussion",c:"band-meet"}:
+      pct>=60?{t:"Mixed signal — hold / more evidence",c:"band-mix"}:
+      {t:"Below bar — do not advance",c:"band-below"};
+    bandText = band.t; bandClass = band.c;
+    if(scored.length<rows.length) warnings.push(`<div class="amberwarn">${rows.length-scored.length} competency(ies) unscored — score every assigned competency; a 1 with “no example after two probes” is real data.</div>`);
+  }
+  $("sPct").textContent = pctText;
+  const b = $("sBand"); b.textContent = bandText; b.className = "bandlbl "+bandClass;
+  $("sGate").innerHTML = gated.length ? '<span class="chip gate">GATE</span>' : "";
+  $("warnings").innerHTML = warnings.join("");
+}
+
+// ══════════════ EXPORTS ══════════════
+function buildText(){
+  const r = ROLES[state.role]; const rows = currentScores();
+  const L = [];
+  L.push("ECCLES MBA STRUCTURED INTERVIEW — SCORECARD");
+  L.push("University of Utah — David Eccles School of Business");
+  L.push("═".repeat(56));
+  L.push(`Candidate: ${state.cand||"—"}   Interviewer: ${state.ivr||"—"}   Date: ${state.date}`);
+  L.push(`Role: ${r.label}   Stage: ${STAGE_LABEL[state.stage]}`);
+  L.push("");
+  rows.forEach(x=>{
+    L.push(`${x.comp}${x.gate?" [GATEKEEPER]":""}`);
+    L.push(`  Score: ${x.score||"—"} ${x.score?("("+BARS[x.score-1].l+(DEFS[x.comp].src==="mba"?"; maps to "+DEVMAP[x.score]:"")+")"):""}`);
+    if(x.notes) L.push(`  Evidence: ${x.notes}`);
+    if(x.risk) L.push(`  RISK FLAG: ${x.riskNote||"(no evidence noted)"}`);
+    L.push("");
+  });
+  const scored = rows.filter(x=>x.score);
+  const pct = scored.length?Math.round(100*scored.reduce((a,x)=>a+x.score,0)/(scored.length*4)):null;
+  L.push(`Total: ${pct!==null?pct+"%":"—"}   ${$("sBand").textContent}`);
+  L.push(`Recommendation: ${state.rec||"—"}   Confidence: ${state.conf||"—"}`);
+  if(state.cx) L.push(`Candidate experience notes: ${state.cx}`);
+  L.push("");
+  L.push("Submit before any discussion with other interviewers. Evidence over opinion.");
+  return L.join("\n");
+}
+function buildCSV(){
+  const r = ROLES[state.role]; const rows = currentScores();
+  const q = v => '"'+String(v==null?"":v).replace(/"/g,'""')+'"';
+  const head = ["candidate","interviewer","date","role","stage","competency","gatekeeper","score","score_label","dev_mapping","evidence_notes","risk_flag","risk_note","recommendation","confidence"];
+  const out = [head.join(",")];
+  rows.forEach(x=>out.push([state.cand,state.ivr,state.date,r.label,STAGE_LABEL[state.stage],x.comp,x.gate?"yes":"no",
+    x.score||"",x.score?BARS[x.score-1].l:"",(x.score&&DEFS[x.comp].src==="mba")?DEVMAP[x.score]:"",
+    x.notes||"",x.risk?"yes":"no",x.riskNote||"",state.rec,state.conf].map(q).join(",")));
+  return out.join("\r\n");
+}
+
+// ══════════════ EVENTS ══════════════
+document.addEventListener("click", e=>{
+  const bar = e.target.closest(".bar");
+  if(bar){
+    const comp = bar.dataset.comp, score = +bar.dataset.score;
+    const k = skey(comp); const cur = state.scores[k]||{};
+    cur.score = (cur.score===score)? undefined : score;   // tap again to unset
+    state.scores[k] = cur; save(); renderBoard();
+  }
+});
+document.addEventListener("input", e=>{
+  const el = e.target;
+  if(el.dataset && el.dataset.comp){
+    const k = skey(el.dataset.comp); const cur = state.scores[k]||{};
+    if(el.dataset.field==="notes") cur.notes = el.value;
+    if(el.dataset.field==="riskNote") cur.riskNote = el.value;
+    if(el.dataset.field==="risk"){ cur.risk = el.checked; state.scores[k]=cur; save(); renderBoard(); return; }
+    state.scores[k]=cur; save(); renderSummary(); return;
+  }
+  if(["cand","ivr","idate","cx"].includes(el.id)){
+    state[el.id==="idate"?"date":el.id] = el.value; save();
+  }
+});
+$("role").addEventListener("change", e=>{ state.role=e.target.value; save(); renderBoard(); });
+$("stage").addEventListener("change", e=>{ state.stage=e.target.value; save(); renderBoard(); });
+$("rec").addEventListener("change", e=>{ state.rec=e.target.value; save(); });
+$("conf").addEventListener("change", e=>{ state.conf=e.target.value; save(); });
+
+$("packBtn").addEventListener("click", ()=>$("packFile").click());
+$("packFile").addEventListener("change", e=>{
+  const f = e.target.files[0]; if(!f) return;
+  const rd = new FileReader();
+  rd.onload = ()=>{
+    try{
+      const p = JSON.parse(rd.result);
+      if(!p.competencies) throw new Error("not a question pack");
+      PACK = p;
+      $("packStatus").textContent = `Pack loaded — ${Object.keys(p.competencies).length} question sets`;
+      $("packStatus").className = "chip ok";
+      renderBoard();
+    }catch(err){
+      $("packStatus").textContent = "Could not read pack — check the JSON file";
+      $("packStatus").className = "chip warn";
+    }
+  };
+  rd.readAsText(f);
+});
+
+$("copyBtn").addEventListener("click", ()=>{
+  navigator.clipboard.writeText(buildText()).then(
+    ()=>{ $("copyBtn").textContent="Copied"; setTimeout(()=>$("copyBtn").textContent="Copy as text",2000); },
+    ()=>alert("Copy not supported in this browser — use Print / Save PDF."));
+});
+$("csvBtn").addEventListener("click", ()=>{
+  const blob = new Blob([buildCSV()],{type:"text/csv"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `scorecard_${(state.cand||"candidate").replace(/\W+/g,"_")}_${state.stage}.csv`;
+  a.click(); URL.revokeObjectURL(a.href);
+});
+$("clearBtn").addEventListener("click", ()=>{
+  if(!confirm("Clear all scores, notes, and candidate details for this browser? Export first if you need a record.")) return;
+  state = { role:state.role, stage:state.stage, cand:"", ivr:"", date:new Date().toLocaleDateString(), rec:"", conf:"", cx:"", scores:{} };
+  try{ localStorage.removeItem(LS_KEY); }catch(e){}
+  initFields(); renderBoard();
+});
+
+function initFields(){
+  $("cand").value = state.cand; $("ivr").value = state.ivr; $("idate").value = state.date;
+  $("rec").value = state.rec; $("conf").value = state.conf; $("cx").value = state.cx;
+  $("role").value = state.role; $("stage").value = state.stage;
+}
+
+// ══════════════ INIT ══════════════
+renderRoleOptions(); load(); initFields(); renderBoard();
+</script>
+</body>
+</html>
