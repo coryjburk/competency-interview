@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mock Interview Lifecycle — Eccles MBA Interview Prep</title>
+<style>
+  :root{--red:#CC0000;--red-dk:#890000;--black:#1A1A1A;--ink:#262626;--muted:#6B6B6B;
+    --gray-lt:#E2E6E6;--tint:#F7F3F3;--green:#3B6D11;--amber:#854F0B;--blue:#185FA5;
+    --sans:'Source Sans 3','Myriad Pro',system-ui,-apple-system,sans-serif;
+    --serif:'Source Serif 4','Kepler',Georgia,serif;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:var(--sans);color:var(--ink);background:#FAFAFA;font-size:15px;line-height:1.55}
+  .wrap{max-width:900px;margin:0 auto;padding:0 16px 110px}
+  header{border-top:5px solid var(--red);background:#fff;border-bottom:1px solid var(--gray-lt);padding:20px 24px 16px;margin:0 -16px 20px}
+  .brandrow{display:flex;align-items:center;gap:14px}
+  .ublock{width:46px;height:46px;background:var(--red);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:26px;font-family:var(--serif);flex:none}
+  .eyebrow{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--red);font-weight:700}
+  h1{font-family:var(--serif);font-size:24px;font-weight:600;color:var(--black);margin:2px 0 0}
+  .sub{font-size:13px;color:var(--muted);margin-top:8px}
+  h2{font-family:var(--serif);font-size:19px;color:var(--black);margin:0 0 10px}
+  .card{background:#fff;border:1px solid var(--gray-lt);border-radius:10px;padding:18px 20px;margin-bottom:16px}
+  .card.accent{border-left:4px solid var(--red)}
+  label{display:block;font-size:12.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px}
+  select,textarea,input[type=text]{width:100%;font-family:var(--sans);font-size:14.5px;color:var(--ink);border:1px solid var(--gray-lt);border-radius:7px;padding:8px 10px;background:#fff}
+  textarea{min-height:110px;resize:vertical}
+  select:focus,textarea:focus,button:focus-visible,input:focus{outline:2px solid var(--blue);outline-offset:1px}
+  .chip{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;border-radius:20px;padding:2px 10px;vertical-align:middle}
+  .chip.gate{background:var(--red-dk);color:#fff}
+  .chip.mba{background:var(--tint);color:var(--red-dk);border:1px solid var(--red-dk)}
+  .chip.role{background:#EEF3F6;color:var(--blue);border:1px solid var(--blue)}
+  .chip.ok{background:#EDF3E6;color:var(--green);border:1px solid var(--green)}
+  .btn{font-family:var(--sans);font-size:14px;font-weight:600;border-radius:7px;padding:9px 16px;cursor:pointer;border:1px solid var(--gray-lt);background:#fff;color:var(--ink)}
+  .btn.primary{background:var(--red);border-color:var(--red);color:#fff}
+  .btn.primary:hover{background:var(--red-dk)}
+  .btn.small{font-size:12.5px;padding:5px 12px}
+  .btn.rec[aria-pressed="true"]{background:var(--red-dk);border-color:var(--red-dk);color:#fff}
+  .btn.danger{color:var(--red-dk);border-color:var(--red-dk)}
+  /* Stage tabs */
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .tab{flex:1;min-width:150px;text-align:left;border:1.5px solid var(--gray-lt);border-radius:9px;background:#fff;padding:10px 12px;cursor:pointer;font-family:var(--sans)}
+  .tab .tn{font-family:var(--serif);font-weight:700;font-size:15px;color:var(--black);display:block}
+  .tab .ts{font-size:11.5px;color:var(--muted)}
+  .tab[aria-selected="true"]{border-color:var(--red);background:var(--tint)}
+  .tab[aria-selected="true"] .tn{color:var(--red-dk)}
+  .tab .done{color:var(--green);font-weight:700}
+  /* Question blocks */
+  .q{background:#fff;border:1px solid var(--gray-lt);border-radius:10px;margin-bottom:14px;overflow:hidden}
+  .q-head{padding:12px 16px 10px;background:var(--tint);border-bottom:1px solid var(--gray-lt)}
+  .q-head .qt{font-size:15px;font-weight:600;color:var(--black);margin:6px 0 0}
+  .q-body{padding:12px 16px 16px}
+  .rowbtns{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
+  audio{height:32px;vertical-align:middle;max-width:220px}
+  .scorelog{display:flex;gap:6px;align-items:center;margin-top:8px;flex-wrap:wrap}
+  .sbtn{width:38px;height:34px;border:1.5px solid var(--gray-lt);border-radius:7px;background:#fff;font-family:var(--serif);font-weight:700;font-size:15px;cursor:pointer;color:var(--ink)}
+  .sbtn[aria-pressed="true"]{border-color:var(--red);background:var(--tint);color:var(--red-dk)}
+  .note{font-size:12.5px;color:var(--muted)}
+  .gatewarn{background:var(--red-dk);color:#fff;border-radius:8px;padding:10px 14px;font-weight:600;margin:10px 0}
+  .callout{background:var(--tint);border-left:4px solid var(--red);border-radius:0 8px 8px 0;padding:10px 14px;margin:10px 0;font-size:13.5px}
+  pre{background:var(--black);color:#EDEDED;border-radius:9px;padding:14px;font-size:12px;line-height:1.45;white-space:pre-wrap;word-break:break-word;max-height:260px;overflow:auto}
+  /* Summary bar */
+  .summary{position:sticky;bottom:0;background:var(--black);color:#fff;margin:0 -16px;padding:11px 20px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;font-size:13.5px;z-index:5}
+  .summary .big{font-family:var(--serif);font-size:19px;font-weight:700}
+  .band-ok{color:#8FD46A}.band-mid{color:#F4E285}.band-low{color:#F08080}
+  footer{margin-top:26px;font-size:12px;color:var(--muted);border-top:1px solid var(--gray-lt);padding-top:14px}
+  a{color:var(--red-dk)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="brandrow">
+    <div class="ublock" aria-hidden="true">U</div>
+    <div>
+      <div class="eyebrow">David Eccles School of Business — Full-Time MBA</div>
+      <h1>Mock Interview Lifecycle</h1>
+    </div>
+  </div>
+  <div class="sub">Run yourself through all four stages of a real structured interview — speak your answers, get AI coaching scored on the actual rubric, and track gates and totals exactly like an employer scorecard. <a href="student_playbook.html">Back to the Prep Playbook</a>.</div>
+</header>
+
+<section class="card accent">
+  <h2>Setup</h2>
+  <div style="display:grid;grid-template-columns:2fr 1fr;gap:14px">
+    <div><label for="role">Target role</label><select id="role"></select></div>
+    <div><label for="sdate">Date</label><input type="text" id="sdate"></div>
+  </div>
+  <p class="note" style="margin-top:10px">Stages are freely navigable — practice any one on its own. For the full simulation, run them in order and log your AI scores as you go; the debrief at the end works best with all four. Questions come from the <b>retired</b> employer bank; your real interviews will use different questions on the same competencies — which is the point.</p>
+</section>
+
+<div class="tabs" role="tablist" id="tabs"></div>
+
+<section class="card" id="stagePanel"></section>
+
+<section class="card" id="debrief">
+  <h2>Lifecycle debrief</h2>
+  <div id="overall"></div>
+  <div class="rowbtns">
+    <button class="btn primary" id="debriefBtn" type="button">Copy final debrief prompt</button>
+    <button class="btn" id="coachExport" type="button">Copy summary for my career coach</button>
+    <button class="btn danger" id="clearBtn" type="button">Clear this mock</button>
+  </div>
+  <pre id="debriefOut" hidden></pre>
+  <p class="note">Answers and logged scores autosave to this browser only. Audio recordings live in memory for this session and are never saved or uploaded. Voice transcription uses your browser's built-in speech service (in Chrome, audio is processed by Google); typing always works everywhere.</p>
+</section>
+
+<footer>
+  Eccles MBA Structured Interview Toolkit · Mock Interview Lifecycle v1.0 · Same stages, competencies, rubric, gates, and thresholds as the employer scorecard. Practice the competency, not the sentence. © University of Utah, David Eccles School of Business.
+</footer>
+
+</div>
+
+<script src="retired_bank.js"></script>
+<script>
+"use strict";
+const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const $ = id => document.getElementById(id);
+const STAGES = ["screen","hm","panel","final"];
+const STAGE_TIME = {screen:"20–30 min",hm:"45–60 min",panel:"60–90 min",final:"30–45 min"};
+const DEVLINE = "For competencies marked [MBA MODEL], also translate each score to the Eccles developmental scale: 1 maps to Advanced Beginner (1-2), 2 to Competent (3-5), 3 to Proficient (6-8), 4 to Expert (9-10).";
+const LS = "eccles-mock-interview-v1";
+
+let state = { role:"consultant", stage:"screen", date:new Date().toLocaleDateString(), data:{} };
+// data key: role|stage -> { answers:[], scores:[], variants:[] }
+function save(){ try{ localStorage.setItem(LS, JSON.stringify(state)); }catch(e){} }
+function load(){ try{ const s=JSON.parse(localStorage.getItem(LS)); if(s&&s.data) state=Object.assign(state,s);}catch(e){} }
+function slot(){
+  const k = state.role+"|"+state.stage;
+  if(!state.data[k]) state.data[k] = { answers:[], scores:[], variants:[] };
+  return state.data[k];
+}
+
+// Build the question list for a role+stage: screen adds motivation Qs; one question per competency (variant-cyclable)
+function questionsFor(role, stage, variants){
+  const r = ROLES[role]; const out = [];
+  if(stage==="screen"){
+    (RETIRED_SCREENS[role]||[]).forEach((q,i)=>out.push({q, comp:null, label:"Role motivation "+(i+1), gate:false, kind:"Motivation", fixed:true}));
+  }
+  r.stages[stage].forEach((comp,ci)=>{
+    const set = RETIRED[comp]||[];
+    const v = (variants && variants[ci])||0;
+    const kinds = ["Behavioral","Behavioral (alt)","Situational"];
+    out.push({q:set[v%3], comp, label:comp, gate:r.gates.includes(comp), kind:kinds[v%3], ci});
+  });
+  return out;
+}
+
+// ── Speech: MediaRecorder for playback + SpeechRecognition for transcript ──
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+let activeRec = null; // {recog, media, chunks, idx, stream}
+async function toggleRecord(idx, btn){
+  if(activeRec){ stopRecord(); return; }
+  let stream;
+  try{ stream = await navigator.mediaDevices.getUserMedia({audio:true}); }
+  catch(e){ alert("Microphone access was blocked. You can always type your answer."); return; }
+  const chunks=[]; let media=null;
+  try{ media = new MediaRecorder(stream); media.ondataavailable=e=>chunks.push(e.data); media.start(); }catch(e){}
+  let recog=null;
+  if(SR){
+    recog = new SR(); recog.continuous=true; recog.interimResults=false; recog.lang="en-US";
+    recog.onresult = ev=>{
+      let t=""; for(let i=ev.resultIndex;i<ev.results.length;i++) if(ev.results[i].isFinal) t+=ev.results[i][0].transcript+" ";
+      if(t){ const ta=document.querySelector(`textarea[data-idx="${idx}"]`);
+        ta.value = (ta.value ? ta.value.replace(/\s+$/," ") : "") + t;
+        slot().answers[idx] = ta.value; save(); }
+    };
+    try{ recog.start(); }catch(e){ recog=null; }
+  }
+  activeRec = {recog, media, chunks, idx, stream, btn};
+  btn.setAttribute("aria-pressed","true"); btn.textContent="■ Stop";
+  if(!SR) btn.insertAdjacentHTML("afterend",'<span class="note"> recording for playback — transcription unavailable in this browser, type as you go</span>');
+}
+function stopRecord(){
+  const a = activeRec; if(!a) return; activeRec=null;
+  if(a.recog){ try{a.recog.stop();}catch(e){} }
+  if(a.media && a.media.state!=="inactive"){
+    a.media.onstop = ()=>{
+      const blob = new Blob(a.chunks,{type:a.media.mimeType||"audio/webm"});
+      const url = URL.createObjectURL(blob);
+      const holder = document.querySelector(`[data-audio="${a.idx}"]`);
+      if(holder) holder.innerHTML = `<audio controls src="${url}"></audio> <span class="note">playback only — not saved</span>`;
+    };
+    try{a.media.stop();}catch(e){}
+  }
+  a.stream.getTracks().forEach(t=>t.stop());
+  a.btn.setAttribute("aria-pressed","false"); a.btn.textContent="🎙 Record answer";
+}
+
+// ── Render ──
+function renderTabs(){
+  $("tabs").innerHTML = STAGES.map(st=>{
+    const k = state.role+"|"+st; const d = state.data[k];
+    const qs = questionsFor(state.role, st, d&&d.variants);
+    const answered = d ? qs.filter((_,i)=>d.answers[i]&&d.answers[i].trim()).length : 0;
+    const scored = d ? qs.filter((_,i)=>d.scores[i]).length : 0;
+    return `<button class="tab" role="tab" aria-selected="${st===state.stage}" data-stage="${st}">
+      <span class="tn">${STAGE_LABEL[st]}</span>
+      <span class="ts">${STAGE_TIME[st]} · ${qs.length} questions · ${answered} answered${scored?` · <span class="done">${scored} scored</span>`:""}</span></button>`;
+  }).join("");
+}
+
+function renderStage(){
+  const d = slot();
+  const qs = questionsFor(state.role, state.stage, d.variants);
+  const r = ROLES[state.role];
+  let html = `<h2>${STAGE_LABEL[state.stage]} — ${esc(r.label)}</h2>
+  <p class="note">Answer each question in its own box — out loud if you can (🎙 transcribes as you speak; edit the text after). When all boxes are done, copy the coaching prompt below into Claude or another AI assistant, then log the scores it gives you.</p>`;
+  html += qs.map((it,i)=>{
+    const dchip = it.comp ? `<span class="chip ${DEFS[it.comp].src==="mba"?"mba":"role"}">${DEFS[it.comp].src==="mba"?"MBA Model":"Role"}</span>` : `<span class="chip role">Screen</span>`;
+    const sc = d.scores[i];
+    return `<div class="q">
+      <div class="q-head">
+        <div>${dchip}${it.gate?' <span class="chip gate">Gatekeeper</span>':""} <b style="font-size:13px">${esc(it.label)}</b> <span class="note">· ${it.kind}</span>
+          ${!it.fixed?`<button class="btn small" style="float:right" data-shuffle="${it.ci}" type="button">↻ Different question</button>`:""}</div>
+        <p class="qt">${esc(it.q)}</p>
+      </div>
+      <div class="q-body">
+        <div class="rowbtns">
+          <button class="btn rec" type="button" data-rec="${i}" aria-pressed="false">🎙 Record answer</button>
+          <span data-audio="${i}"></span>
+        </div>
+        <label for="a${i}">Your answer</label>
+        <textarea id="a${i}" data-idx="${i}" placeholder="Speak or type — aim for STAR + Reflection: situation, your task, your actions (\u201CI\u201D), the result with a number, and what you learned.">${esc(d.answers[i]||"")}</textarea>
+        <div class="scorelog"><span class="note" style="font-weight:700">Log the AI's score:</span>
+          ${[1,2,3,4].map(v=>`<button class="sbtn" data-score="${i}|${v}" aria-pressed="${sc===v}" aria-label="score ${v}">${v}</button>`).join("")}
+          ${sc?`<span class="note">${sc===1&&it.gate?'<b style="color:var(--red-dk)">gate triggered</b>':""}</span>`:""}
+        </div>
+      </div></div>`;
+  }).join("");
+
+  // stage-level gate warning + stage total
+  const gates = qs.map((it,i)=>({it,s:d.scores[i]})).filter(x=>x.it.gate&&x.s===1);
+  if(gates.length) html += `<div class="gatewarn">Gate rule: score of 1 on ${gates.map(g=>esc(g.it.label)).join(", ")} — in a real loop this ends the candidacy at any total. Make this competency your next practice priority.</div>`;
+  const scored = qs.map((_,i)=>d.scores[i]).filter(Boolean);
+  if(scored.length) html += `<div class="callout"><b>Stage total so far:</b> ${Math.round(100*scored.reduce((a,b)=>a+b,0)/(scored.length*4))}% across ${scored.length}/${qs.length} scored answers.</div>`;
+
+  html += `<div class="rowbtns" style="margin-top:14px">
+    <button class="btn primary" id="stagePrompt" type="button">Copy coaching prompt for this stage</button>
+    <span class="note" id="promptHint">${qs.filter((_,i)=>d.answers[i]&&d.answers[i].trim()).length}/${qs.length} answered</span></div>
+  <pre id="stagePromptOut" hidden></pre>`;
+  $("stagePanel").innerHTML = html;
+  renderTabs(); renderOverall();
+}
+
+function buildStagePrompt(){
+  const d = slot(); const r = ROLES[state.role];
+  const qs = questionsFor(state.role, state.stage, d.variants);
+  const L = [];
+  L.push(`You are a structured-interview coach for an MBA student at the David Eccles School of Business (University of Utah). I just completed a mock ${STAGE_LABEL[state.stage]} interview for the role of ${r.label}. Score me honestly and strictly against the rubric below — do not flatter me; a candid 2 helps me more than a kind 3.`);
+  L.push("");
+  L.push("SCORING RUBRIC (use exactly this scale)"); L.push(BARS_TEXT); L.push("");
+  L.push("FOR EACH ANSWER BELOW:");
+  L.push("1. Score it 1-4, quoting the specific phrases from my answer that justify the score.");
+  L.push("2. Check STAR+R completeness: situation, my personal actions (\u201CI\u201D vs \u201Cwe\u201D), a measurable result, and a reflection.");
+  L.push("3. Name the single change that would raise the score one level.");
+  L.push("4. Flag red-flag patterns: vagueness, no ownership, no numbers, no reflection, blaming, or an answer that dodges the question.");
+  L.push("");
+  L.push("THEN, AFTER ALL ANSWERS: give the stage total as a percentage of available points (each answer out of 4), and state whether any GATEKEEPER answer scored a 1 — in a real process that ends the candidacy regardless of total.");
+  L.push(DEVLINE);
+  L.push("");
+  qs.forEach((it,i)=>{
+    const tag = it.comp ? `${it.label}${DEFS[it.comp].src==="mba"?" [MBA MODEL]":""}${it.gate?" [GATEKEEPER]":""}` : it.label;
+    L.push(`Q${i+1} (${tag}) — ${it.kind}: ${it.q}`);
+    L.push(`MY ANSWER: ${d.answers[i] && d.answers[i].trim() ? d.answers[i].trim() : "(no answer given — score this a 1 and tell me how to build one)"}`);
+    L.push("");
+  });
+  L.push("Finish by asking whether I want to re-run my weakest answer with your coaching applied.");
+  return L.join("\n");
+}
+
+function stageStats(st){
+  const k = state.role+"|"+st; const d = state.data[k]; if(!d) return null;
+  const qs = questionsFor(state.role, st, d.variants);
+  const scored = qs.map((_,i)=>d.scores[i]).filter(Boolean);
+  const gates = qs.filter((it,i)=>it.gate && d.scores[i]===1).map(it=>it.label);
+  return { total:qs.length, answered:qs.filter((_,i)=>d.answers[i]&&d.answers[i].trim()).length,
+    scored:scored.length, pct: scored.length?Math.round(100*scored.reduce((a,b)=>a+b,0)/(scored.length*4)):null, gates, qs, d };
+}
+
+function renderOverall(){
+  const rows = STAGES.map(st=>({st, s:stageStats(st)}));
+  const allScored = rows.flatMap(r=>r.s? r.s.qs.map((_,i)=>r.s.d.scores[i]).filter(Boolean):[]);
+  const gates = rows.flatMap(r=>r.s?r.s.gates:[]);
+  let html = `<table style="border-collapse:collapse;width:100%;font-size:13.5px;margin-bottom:10px">
+    <tr>${["Stage","Answered","Scored","Stage %"].map(h=>`<th style="background:var(--red-dk);color:#fff;padding:6px 10px;text-align:left;font-size:12px">${h}</th>`).join("")}</tr>`;
+  rows.forEach(r=>{
+    const s=r.s;
+    html+=`<tr>${[STAGE_LABEL[r.st], s?`${s.answered}/${s.total}`:"—", s?`${s.scored}/${s.total}`:"—", s&&s.pct!==null?s.pct+"%":"—"]
+      .map(c=>`<td style="border:1px solid var(--gray-lt);padding:6px 10px">${c}</td>`).join("")}</tr>`;
+  });
+  html+=`</table>`;
+  if(gates.length) html+=`<div class="gatewarn">Gates triggered: ${[...new Set(gates)].map(esc).join(", ")}. Deepest-priority practice targets.</div>`;
+  if(allScored.length){
+    const pct = Math.round(100*allScored.reduce((a,b)=>a+b,0)/(allScored.length*4));
+    const band = pct>=80?["Strong — interview-ready signal","band-ok"]:pct>=70?["Meets bar — keep sharpening","band-mid"]:pct>=60?["Mixed — targeted practice needed","band-mid"]:["Below bar — story bank first, then re-run","band-low"];
+    html+=`<div class="callout"><b>Overall: ${pct}%</b> across ${allScored.length} scored answers — <b class="${band[1]}" style="color:inherit">${band[0]}</b>. Same thresholds employers use: 80%+ advance · 70–79% advance with discussion · below 60% do not advance.</div>`;
+  } else {
+    html+=`<p class="note">Log AI scores in each stage to build your lifecycle totals here.</p>`;
+  }
+  $("overall").innerHTML = html;
+  renderSummaryBar(allScored, gates);
+}
+function renderSummaryBar(allScored, gates){
+  const pct = allScored.length?Math.round(100*allScored.reduce((a,b)=>a+b,0)/(allScored.length*4)):null;
+  $("sumbar").innerHTML = `<span>Scored <span class="big">${allScored.length}</span> answers</span>
+    <span>Overall <span class="big">${pct!==null?pct+"%":"—"}</span></span>
+    <span class="${pct===null?"":pct>=80?"band-ok":pct>=60?"band-mid":"band-low"}" style="font-weight:700">${gates.length?"GATE TRIGGERED — practice priority set":(pct===null?"Answer, get coached, log scores":"")}</span>`;
+}
+
+function buildDebriefPrompt(){
+  const r = ROLES[state.role]; const L=[];
+  L.push(`You are a senior MBA career coach at the David Eccles School of Business. I completed a full four-stage mock interview lifecycle for the role of ${r.label}, was coached stage by stage by an AI using the official 4-point rubric, and logged the scores below. Give me an honest final debrief. Do not flatter me.`);
+  L.push(""); L.push("SCORING RUBRIC"); L.push(BARS_TEXT); L.push("");
+  STAGES.forEach(st=>{
+    const s = stageStats(st); if(!s) return;
+    L.push(`=== ${STAGE_LABEL[st]} ${s.pct!==null?`(logged stage total: ${s.pct}%)`:"(not scored)"} ===`);
+    s.qs.forEach((it,i)=>{
+      const tag = it.comp?`${it.label}${it.gate?" [GATEKEEPER]":""}`:it.label;
+      L.push(`Q (${tag}): ${it.q}`);
+      L.push(`MY ANSWER: ${s.d.answers[i]&&s.d.answers[i].trim()?s.d.answers[i].trim():"(unanswered)"}`);
+      L.push(`LOGGED SCORE: ${s.d.scores[i]||"—"}`);
+    });
+    L.push("");
+  });
+  L.push("DEBRIEF ME:");
+  L.push("1. My three strongest competencies on this evidence, and why.");
+  L.push("2. My three weakest — especially any gatekeeper that scored a 1 — and what specifically is missing (ownership? numbers? reflection? story choice?).");
+  L.push("3. Patterns across stages: am I reusing stories, defaulting to \u201Cwe\u201D, skipping reflection, or padding context?");
+  L.push("4. A concrete two-week practice plan: which stories to rebuild, which retired-bank questions to re-run, in what order.");
+  L.push("5. My readiness call, straight: ready to interview / ready with targeted work / not yet — and the single highest-leverage fix.");
+  return L.join("\n");
+}
+function buildCoachExport(){
+  const r=ROLES[state.role]; const L=[];
+  L.push("ECCLES MBA MOCK INTERVIEW LIFECYCLE — SUMMARY FOR CAREER COACHING");
+  L.push(`Role: ${r.label}   Date: ${state.date}`);
+  L.push("");
+  STAGES.forEach(st=>{
+    const s=stageStats(st); if(!s) return;
+    L.push(`${STAGE_LABEL[st]}: ${s.answered}/${s.total} answered, ${s.scored} scored${s.pct!==null?`, stage ${s.pct}%`:""}${s.gates.length?`, GATE: ${s.gates.join(", ")}`:""}`);
+    s.qs.forEach((it,i)=>{ if(s.d.scores[i]) L.push(`  · ${it.label}: ${s.d.scores[i]}/4`); });
+  });
+  const all=STAGES.flatMap(st=>{const s=stageStats(st);return s? s.qs.map((_,i)=>s.d.scores[i]).filter(Boolean):[];});
+  if(all.length) L.push(`Overall: ${Math.round(100*all.reduce((a,b)=>a+b,0)/(all.length*4))}% across ${all.length} scored answers`);
+  L.push(""); L.push("Scores are AI-coached practice scores on the official 4-point rubric (retired question bank). Bring-up items: gates triggered, competencies scoring 2 or below, story-bank gaps.");
+  return L.join("\n");
+}
+
+// ── Events ──
+document.addEventListener("click", async e=>{
+  const tab=e.target.closest(".tab"); if(tab){ if(activeRec) stopRecord(); state.stage=tab.dataset.stage; save(); renderStage(); return; }
+  const rec=e.target.closest("[data-rec]"); if(rec){ toggleRecord(+rec.dataset.rec, rec); return; }
+  const sh=e.target.closest("[data-shuffle]"); if(sh){ const d=slot(); const ci=+sh.dataset.shuffle;
+    d.variants[ci]=((d.variants[ci]||0)+1)%3; save(); renderStage(); return; }
+  const sb=e.target.closest("[data-score]"); if(sb){ const [i,v]=sb.dataset.score.split("|").map(Number);
+    const d=slot(); d.scores[i]=(d.scores[i]===v?undefined:v); save(); renderStage(); return; }
+  if(e.target.id==="stagePrompt"){
+    const txt=buildStagePrompt(); const out=$("stagePromptOut"); out.textContent=txt; out.hidden=false;
+    try{ await navigator.clipboard.writeText(txt); e.target.textContent="Copied — paste into Claude"; setTimeout(()=>{e.target.textContent="Copy coaching prompt for this stage";},2500);}catch(err){}
+    return;
+  }
+  if(e.target.id==="debriefBtn"){
+    const txt=buildDebriefPrompt(); const out=$("debriefOut"); out.textContent=txt; out.hidden=false;
+    try{ await navigator.clipboard.writeText(txt); e.target.textContent="Copied — paste into Claude"; setTimeout(()=>{e.target.textContent="Copy final debrief prompt";},2500);}catch(err){}
+    return;
+  }
+  if(e.target.id==="coachExport"){
+    try{ await navigator.clipboard.writeText(buildCoachExport()); e.target.textContent="Copied"; setTimeout(()=>{e.target.textContent="Copy summary for my career coach";},2000);}catch(err){ alert("Copy not supported — use the debrief prompt box and copy manually."); }
+    return;
+  }
+  if(e.target.id==="clearBtn"){
+    if(!confirm("Clear all answers and logged scores for this mock (all stages, this role)?")) return;
+    STAGES.forEach(st=>delete state.data[state.role+"|"+st]); save(); renderStage(); return;
+  }
+});
+document.addEventListener("input", e=>{
+  if(e.target.matches("textarea[data-idx]")){ slot().answers[+e.target.dataset.idx]=e.target.value; save(); renderTabs(); }
+  if(e.target.id==="sdate"){ state.date=e.target.value; save(); }
+});
+$("role") && null;
+
+// init
+(function(){
+  load();
+  $("role").innerHTML = Object.entries(ROLES).map(([id,r])=>`<option value="${id}">${esc(r.label)}</option>`).join("");
+  $("role").value = state.role; $("sdate").value = state.date;
+  $("role").addEventListener("change", e=>{ if(activeRec) stopRecord(); state.role=e.target.value; save(); renderStage(); });
+  document.body.insertAdjacentHTML("beforeend",'<div class="summary" id="sumbar" role="status" aria-live="polite"></div>');
+  renderStage();
+})();
+</script>
+</body>
+</html>
