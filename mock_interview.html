@@ -63,8 +63,16 @@
   .summary .big{font-family:var(--serif);font-size:19px;font-weight:700}
   .band-ok{color:#8FD46A}.band-mid{color:#F4E285}.band-low{color:#F08080}
     .sitenav{border:1.5px solid var(--red);border-radius:10px;background:#fff;padding:12px 18px;margin-bottom:18px}
-  .sitenav p{margin:5px 0;font-size:14.5px}
+  .sitenav p{margin:7px 0;font-size:14.5px}
+  .sitenav .who{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted)}
   .sitenav .here{font-weight:700;color:var(--red-dk)}
+  .sitenav .desc{display:block;font-size:13px;color:var(--muted);margin-top:1px}
+    .chartwrap{background:#fff;border:1px solid var(--gray-lt);border-radius:9px;padding:10px 12px;margin:10px 0}
+  .ptable{border-collapse:collapse;width:100%;font-size:13px;margin:10px 0}
+  .ptable th{background:var(--red-dk);color:#fff;padding:6px 9px;text-align:left;font-size:11.5px}
+  .ptable td{border:1px solid var(--gray-lt);padding:5px 9px}
+  .ptable tr:nth-child(even) td{background:var(--tint)}
+  .up{color:var(--green);font-weight:700}.down{color:var(--red-dk);font-weight:700}
   footer{margin-top:26px;font-size:12px;color:var(--muted);border-top:1px solid var(--gray-lt);padding-top:14px}
   a{color:var(--red-dk)}
 </style>
@@ -84,9 +92,9 @@
 </header>
 
 <nav class="sitenav" aria-label="Toolkit navigation">
-  <p><a href="index.html"><b>Interviewers: click to open the &lsquo;Interview Scorecard&rsquo;.</b></a></p>
-  <p><a href="student_playbook.html"><b>Candidates: click to open the &lsquo;Prep Playbook&rsquo;.</b></a></p>
-  <p class="here">Candidates: you are in the &lsquo;Mock Interview Lifecycle&rsquo;. &mdash; you&rsquo;re here.</p>
+  <p><span class="who">INTERVIEWER SIDE</span><br><a href="index.html"><b>Interview Scorecard</b></a><span class="desc">The live tool employers score you with — the rubric, evidence notes, and gate rules. Worth exploring: it&rsquo;s exactly what you&rsquo;re preparing for. (Questions load from each employer&rsquo;s private pack.)</span></p>
+  <p><span class="who">YOUR SIDE</span><br><a href="student_playbook.html"><b>Prep Playbook</b></a><span class="desc">Your side of the table: the rubric, role maps, the retired question bank, and AI coaching.</span></p>
+  <p><span class="who">PUT IT TOGETHER</span><br><span class="here">Mock Interview Lifecycle &mdash; you&rsquo;re here</span><span class="desc">Where it all comes together: run all four stages and get scored the way an employer scores you.</span></p>
 </nav>
 
 <section class="card accent">
@@ -102,16 +110,33 @@
 
 <section class="card" id="stagePanel"></section>
 
+<section class="card" id="progress">
+  <h2>Progress tracker</h2>
+  <p class="note">Your private practice log — it lives only in this browser and certifies nothing. The <b>trend</b> is the signal; single sessions are noise. Stage runs save from each stage tab and trend on that tab’s sparkline; this chart records complete four-stage mocks only. Export a backup now and then: clearing browser data erases this history.</p>
+  <div class="rowbtns">
+    <button class="btn primary" id="saveRun" type="button">Save complete mock</button>
+    <span class="note" id="saveHint"></span>
+  </div>
+  <div id="progOut"></div>
+  <div class="rowbtns">
+    <button class="btn" id="expProg" type="button">Export backup</button>
+    <button class="btn" id="impProg" type="button">Import backup</button>
+    <input type="file" id="impFile" accept=".json" class="sr-only" aria-label="Import progress backup file" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">
+  </div>
+</section>
+
 <section class="card" id="debrief">
   <h2>Lifecycle debrief</h2>
   <div id="overall"></div>
   <div class="rowbtns">
     <button class="btn primary" id="debriefBtn" type="button">Copy final debrief prompt</button>
     <button class="btn" id="coachExport" type="button">Copy summary for my career coach</button>
-    <button class="btn danger" id="clearBtn" type="button">Clear this mock</button>
+    <button class="btn danger" id="clearBtn" type="button">Clear current mock</button>
+    <button class="btn danger" id="clearProg" type="button">Delete progress log</button>
+    <button class="btn danger" id="clearAll" type="button">Delete everything</button>
   </div>
   <pre id="debriefOut" hidden></pre>
-  <p class="note">Answers and logged scores autosave to this browser only. Audio recordings live in memory for this session and are never saved or uploaded. Voice transcription uses your browser's built-in speech service (in Chrome, audio is processed by Google); typing always works everywhere.</p>
+  <p class="note">Answers and logged scores autosave to this browser only; your progress log is stored separately, so “Clear current mock” never touches the chart. Audio recordings live in memory for this session and are never saved or uploaded. Voice transcription uses your browser's built-in speech service (in Chrome, audio is processed by Google); typing always works everywhere.</p>
 </section>
 
 <footer>
@@ -247,7 +272,7 @@ function renderStage(){
   html += `<div class="rowbtns" style="margin-top:14px">
     <button class="btn primary" id="stagePrompt" type="button">Copy coaching prompt for this stage</button>
     <span class="note" id="promptHint">${qs.filter((_,i)=>d.answers[i]&&d.answers[i].trim()).length}/${qs.length} answered</span></div>
-  <pre id="stagePromptOut" hidden></pre>`;
+  <pre id="stagePromptOut" hidden></pre>` + stageTrackerHTML();
   $("stagePanel").innerHTML = html;
   renderTabs(); renderOverall();
 }
@@ -363,7 +388,7 @@ document.addEventListener("click", async e=>{
   const sh=e.target.closest("[data-shuffle]"); if(sh){ const d=slot(); const ci=+sh.dataset.shuffle;
     d.variants[ci]=((d.variants[ci]||0)+1)%3; save(); renderStage(); return; }
   const sb=e.target.closest("[data-score]"); if(sb){ const [i,v]=sb.dataset.score.split("|").map(Number);
-    const d=slot(); d.scores[i]=(d.scores[i]===v?undefined:v); save(); renderStage(); return; }
+    const d=slot(); d.scores[i]=(d.scores[i]===v?undefined:v); save(); renderStage(); renderProgress(); return; }
   if(e.target.id==="stagePrompt"){
     const txt=buildStagePrompt(); const out=$("stagePromptOut"); out.textContent=txt; out.hidden=false;
     try{ await navigator.clipboard.writeText(txt); e.target.textContent="Copied — paste into Claude"; setTimeout(()=>{e.target.textContent="Copy coaching prompt for this stage";},2500);}catch(err){}
@@ -379,15 +404,154 @@ document.addEventListener("click", async e=>{
     return;
   }
   if(e.target.id==="clearBtn"){
-    if(!confirm("Clear all answers and logged scores for this mock (all stages, this role)?")) return;
-    STAGES.forEach(st=>delete state.data[state.role+"|"+st]); save(); renderStage(); return;
+    if(!confirm("Clear this mock's answers and logged scores (all stages, this role)? Your progress log keeps its saved runs.")) return;
+    if(activeRec) stopRecord();
+    STAGES.forEach(st=>delete state.data[state.role+"|"+st]); save(); renderStage(); renderProgress(); return;
   }
+  if(e.target.id==="clearProg"){
+    if(!confirm("Delete your entire progress log (the chart and all saved runs)? Current mock answers are kept. Consider exporting a backup first.")) return;
+    try{ localStorage.removeItem(LSP); localStorage.removeItem(LSP_LEGACY); }catch(err){} renderStage(); renderProgress(); return;
+  }
+  if(e.target.id==="clearAll"){
+    if(!confirm("Delete EVERYTHING — current answers, scores, and the full progress log?")) return;
+    if(activeRec) stopRecord();
+    try{ localStorage.removeItem(LS); localStorage.removeItem(LSP); localStorage.removeItem(LSP_LEGACY); }catch(err){}
+    state = { role:state.role, stage:"screen", date:new Date().toLocaleDateString(), data:{} };
+    renderStage(); renderProgress(); return;
+  }
+  if(e.target.id==="saveRun"){
+    const snap = fullSnapshot(); if(!snap) return;
+    const p = loadProg(); p.fullRuns.push(snap); saveProg(p); renderProgress();
+    e.target.textContent="Saved ✓"; setTimeout(()=>{e.target.textContent="Save complete mock";},2000); return;
+  }
+  if(e.target.id==="saveStage"){
+    const snap = stageSnapshot(state.stage); if(!snap) return;
+    const p = loadProg(); p.stageRuns.push(snap); saveProg(p); renderStage(); renderProgress(); return;
+  }
+  if(e.target.id==="expProg"){
+    const blob=new Blob([JSON.stringify(loadProg(),null,2)],{type:"application/json"});
+    const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
+    a.download="eccles_mock_progress_backup.json"; a.click(); URL.revokeObjectURL(a.href); return;
+  }
+  if(e.target.id==="impProg"){ $("impFile").click(); return; }
 });
 document.addEventListener("input", e=>{
   if(e.target.matches("textarea[data-idx]")){ slot().answers[+e.target.dataset.idx]=e.target.value; save(); renderTabs(); }
   if(e.target.id==="sdate"){ state.date=e.target.value; save(); }
 });
 $("role") && null;
+
+
+// ── Progress tracker (v2: stage runs + complete mocks) ──
+const LSP = "eccles-mock-progress-v2";
+const LSP_LEGACY = "eccles-mock-progress-v1";
+function loadProg(){ try{ const p=JSON.parse(localStorage.getItem(LSP)); if(p&&Array.isArray(p.stageRuns)&&Array.isArray(p.fullRuns)) return p; }catch(e){} return {version:2,stageRuns:[],fullRuns:[]}; }
+function saveProg(p){ try{ localStorage.setItem(LSP, JSON.stringify(p)); }catch(e){ alert("Could not save progress in this browser."); } }
+function migrateProgress(){
+  try{
+    if(localStorage.getItem(LSP) || !localStorage.getItem(LSP_LEGACY)) return;
+    const old = JSON.parse(localStorage.getItem(LSP_LEGACY));
+    const p = {version:2,stageRuns:[],fullRuns:[]};
+    (old.runs||[]).forEach(r=>{
+      if(r.complete){
+        p.fullRuns.push({ts:r.ts,date:r.date,role:r.role,roleLabel:r.roleLabel,overall:r.overall,n:r.n,stages:Object.fromEntries(Object.entries(r.stages||{}).map(([k,v])=>[k,v.pct])),comps:r.comps||{},gates:r.gates||[]});
+      } else {
+        const done = Object.entries(r.stages||{}).filter(([_,v])=>v.scored===v.total);
+        done.forEach(([st,v])=>p.stageRuns.push({ts:r.ts,date:r.date,role:r.role,roleLabel:r.roleLabel,stage:st,pct:v.pct,n:v.scored,comps:(done.length===1?(r.comps||{}):{}),gates:r.gates||[]}));
+      }
+    });
+    saveProg(p); localStorage.removeItem(LSP_LEGACY);
+  }catch(e){}
+}
+
+function stageSnapshot(st){
+  const k = state.role+"|"+st; const d = state.data[k]; if(!d) return null;
+  const qs = questionsFor(state.role, st, d.variants);
+  if(!qs.length || !qs.every((_,i)=>d.scores[i])) return null;   // whole stage must be scored
+  const scores = qs.map((_,i)=>d.scores[i]);
+  const comps = {};
+  qs.forEach((it,i)=>{ if(it.comp){ (comps[it.comp]=comps[it.comp]||[]).push(d.scores[i]); } });
+  return { ts:Date.now(), date:new Date().toLocaleDateString(), role:state.role, roleLabel:ROLES[state.role].label,
+    stage:st, pct:Math.round(100*scores.reduce((a,b)=>a+b,0)/(scores.length*4)), n:scores.length,
+    comps:Object.fromEntries(Object.entries(comps).map(([c,v])=>[c,Math.round(10*v.reduce((a,b)=>a+b,0)/v.length)/10])),
+    gates: qs.filter((it,i)=>it.gate&&d.scores[i]===1).map(it=>it.label) };
+}
+function fullSnapshot(){
+  const per = STAGES.map(stageSnapshot);
+  if(per.some(s=>!s)) return null;                                // complete lifecycles only
+  const all = []; const comps = {}; const gates = [];
+  per.forEach(s=>{ gates.push(...s.gates);
+    Object.entries(s.comps).forEach(([c,v])=>{ (comps[c]=comps[c]||[]).push(v); }); });
+  STAGES.forEach(st=>{ const d=state.data[state.role+"|"+st]; const qs=questionsFor(state.role,st,d.variants);
+    qs.forEach((_,i)=>all.push(d.scores[i])); });
+  return { ts:Date.now(), date:new Date().toLocaleDateString(), role:state.role, roleLabel:ROLES[state.role].label,
+    overall:Math.round(100*all.reduce((a,b)=>a+b,0)/(all.length*4)), n:all.length,
+    stages:Object.fromEntries(per.map(s=>[s.stage,s.pct])),
+    comps:Object.fromEntries(Object.entries(comps).map(([c,v])=>[c,Math.round(10*v.reduce((a,b)=>a+b,0)/v.length)/10])),
+    gates:[...new Set(gates)] };
+}
+
+// shared chart builder: pts=[{v,title,solid}], compact=true for sparklines
+function chartSVG(pts, compact){
+  const W=compact?300:640, H=compact?84:200, padL=compact?26:34, padR=8, padT=6, padB=compact?6:24;
+  const x=i=>pts.length===1?(padL+(W-padL-padR)/2):padL+i*(W-padL-padR)/(pts.length-1);
+  const y=v=>padT+(100-v)*(H-padT-padB)/100;
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" style="width:100%;max-width:${W}px;height:auto;display:block">`;
+  [[80,100,"#EDF3E6"],[70,80,"#F7F3E2"],[60,70,"#FBF3E8"],[0,60,"#FBF3F3"]].forEach(([a,b,c])=>{
+    s+=`<rect x="${padL}" y="${y(b)}" width="${W-padL-padR}" height="${y(a)-y(b)}" fill="${c}"/>`;});
+  [60,70,80].forEach(v=>{s+=`<line x1="${padL}" x2="${W-padR}" y1="${y(v)}" y2="${y(v)}" stroke="#E2E6E6" stroke-width="1"/><text x="2" y="${y(v)+3.5}" font-size="${compact?8:10}" fill="#6B6B6B">${v}</text>`;});
+  if(pts.length>1) s+=`<path d="${pts.map((p,i)=>`${i?"L":"M"}${x(i)},${y(p.v)}`).join(" ")}" fill="none" stroke="#CC0000" stroke-width="2"/>`;
+  pts.forEach((p,i)=>{ s+= p.solid!==false
+    ? `<circle cx="${x(i)}" cy="${y(p.v)}" r="${compact?3.2:4.5}" fill="#CC0000"><title>${p.title}</title></circle>`
+    : `<circle cx="${x(i)}" cy="${y(p.v)}" r="${compact?3.2:4.5}" fill="#fff" stroke="#CC0000" stroke-width="2"><title>${p.title}</title></circle>`;});
+  return s+"</svg>";
+}
+
+function stageTrackerHTML(){
+  const p = loadProg();
+  const runs = p.stageRuns.filter(r=>r.role===state.role && r.stage===state.stage);
+  const snap = stageSnapshot(state.stage);
+  const show = runs.slice(-12);
+  let inner;
+  if(!runs.length) inner = `<p class="note" style="margin:6px 0 0">No saved runs of this stage yet${snap?"":" — score every question above to save your first"}.</p>`;
+  else {
+    const last=runs[runs.length-1].pct, best=Math.max(...runs.map(r=>r.pct));
+    inner = chartSVG(show.map(r=>({v:r.pct,title:`${r.date} · ${r.pct}%`})),true)
+      + `<p class="note" style="margin:4px 0 0">${runs.length} run${runs.length>1?"s":""} of this stage (${ROLES[state.role].label}) · last ${last}% · best ${best}%</p>`;
+  }
+  return `<div class="chartwrap" style="margin-top:16px"><b style="font-size:13.5px;color:var(--red-dk)">Stage tracker — ${STAGE_LABEL[state.stage]}</b>
+    <div class="rowbtns" style="margin:6px 0 4px"><button class="btn small primary" id="saveStage" type="button" ${snap?"":"disabled"}>Save this stage run</button>
+    <span class="note">${snap?"":"Score all questions in this stage to save."}</span></div>${inner}</div>`;
+}
+
+function renderProgress(){
+  const p = loadProg();
+  const full = p.fullRuns;
+  $("saveRun").disabled = !fullSnapshot();
+  $("saveHint").textContent = fullSnapshot() ? "All four stages scored — this counts as a complete mock." :
+    "Unlocks when all four stages are fully scored. Individual stages save from their own tab.";
+  let html = "";
+  if(!full.length){
+    html += `<p class="note">No complete mocks yet. Stage runs build the sparklines on each stage tab; your first full four-stage mock starts this chart.</p>`;
+  } else {
+    const show = full.slice(-20);
+    html += `<div class="chartwrap">${chartSVG(show.map(r=>({v:r.overall,title:`${r.date} · ${r.roleLabel} · ${r.overall}%`})),false)}
+      <p class="note" style="margin:4px 0 0">Complete four-stage mocks only — ${full.length} on record. Bands are the employer thresholds (60/70/80).</p></div>`;
+  }
+  // per-competency table across BOTH layers, chronological
+  const events = [...p.stageRuns, ...full].sort((a,b)=>a.ts-b.ts);
+  const byComp = {};
+  events.forEach(r=>Object.entries(r.comps||{}).forEach(([c,v])=>{ (byComp[c]=byComp[c]||[]).push(v); }));
+  const rows = Object.entries(byComp).map(([c,v])=>{
+    const first=v[0], latest=v[v.length-1], best=Math.max(...v);
+    const dir = latest>first?'<span class="up">▲</span>':latest<first?'<span class="down">▼</span>':"—";
+    return `<tr><td>${esc(c)}</td><td>${first}</td><td>${latest} ${dir}</td><td>${best}</td><td>${v.length}</td></tr>`;
+  }).join("");
+  if(rows) html += `<table class="ptable"><tr><th>Competency</th><th>First avg</th><th>Latest avg</th><th>Best</th><th>Practices</th></tr>${rows}</table>`;
+  const gateEvents = events.filter(r=>r.gates&&r.gates.length);
+  if(gateEvents.length) html += `<p class="note"><b>Gate history:</b> triggered in ${gateEvents.length}/${events.length} saved runs — most recent: ${esc(gateEvents[gateEvents.length-1].gates.join(", "))}. Gates going quiet over time is the strongest progress signal here.</p>`;
+  $("progOut").innerHTML = html;
+}
 
 // init
 (function(){
@@ -396,7 +560,24 @@ $("role") && null;
   $("role").value = state.role; $("sdate").value = state.date;
   $("role").addEventListener("change", e=>{ if(activeRec) stopRecord(); state.role=e.target.value; save(); renderStage(); });
   document.body.insertAdjacentHTML("beforeend",'<div class="summary" id="sumbar" role="status" aria-live="polite"></div>');
-  renderStage();
+  $("impFile").addEventListener("change", ev=>{
+    const f=ev.target.files[0]; if(!f) return;
+    const rd=new FileReader();
+    rd.onload=()=>{ try{
+        const p=JSON.parse(rd.result);
+        if(p && Array.isArray(p.stageRuns) && Array.isArray(p.fullRuns)){
+          if(!confirm(`Replace your progress log with this backup (${p.stageRuns.length} stage runs, ${p.fullRuns.length} complete mocks)?`)) return;
+          saveProg({version:2,stageRuns:p.stageRuns,fullRuns:p.fullRuns});
+        } else if(p && Array.isArray(p.runs)){
+          if(!confirm(`This is an older backup (${p.runs.length} runs). Convert and replace your progress log?`)) return;
+          localStorage.removeItem(LSP); localStorage.setItem(LSP_LEGACY, JSON.stringify(p)); migrateProgress();
+        } else throw 0;
+        renderStage(); renderProgress();
+      }catch(err){ alert("That file isn't a valid progress backup."); } };
+    rd.readAsText(f); ev.target.value="";
+  });
+  migrateProgress();
+  renderStage(); renderProgress();
 })();
 </script>
 </body>

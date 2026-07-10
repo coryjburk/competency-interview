@@ -88,8 +88,10 @@
   .exports{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
   .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
     .sitenav{border:1.5px solid var(--red);border-radius:10px;background:#fff;padding:12px 18px;margin-bottom:18px}
-  .sitenav p{margin:5px 0;font-size:14.5px}
+  .sitenav p{margin:7px 0;font-size:14.5px}
+  .sitenav .who{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted)}
   .sitenav .here{font-weight:700;color:var(--red-dk)}
+  .sitenav .desc{display:block;font-size:13px;color:var(--muted);margin-top:1px}
   footer{margin-top:30px;font-size:12px;color:var(--muted);border-top:1px solid var(--gray-lt);padding-top:14px}
   /* Print */
   @media print{
@@ -116,9 +118,9 @@
 </header>
 
 <nav class="sitenav" aria-label="Toolkit navigation">
-  <p class="here">Interviewers: you are in the &lsquo;Interview Scorecard&rsquo;. &mdash; you&rsquo;re here.</p>
-  <p><a href="student_playbook.html"><b>Candidates: click to open the &lsquo;Prep Playbook&rsquo;.</b></a></p>
-  <p><a href="mock_interview.html"><b>Candidates: click to open the &lsquo;Mock Interview Lifecycle&rsquo;.</b></a></p>
+  <p class="here">Interviewers: Interview Scorecard &mdash; you&rsquo;re here.</p>
+  <p>Candidates: <a href="student_playbook.html"><b>Prep Playbook</b></a></p>
+  <p>Candidates: <a href="mock_interview.html"><b>Mock Interview Lifecycle</b></a></p>
 </nav>
 
 <section class="card accent" aria-labelledby="setupH">
