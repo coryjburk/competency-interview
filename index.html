@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Interview Scorecard — Full-Time MBA Program · David Eccles School of Business Structured Interview Toolkit</title>
+<title>Interview Scorecard — Eccles MBA Structured Interview Toolkit</title>
 <style>
   :root{
     --red:#CC0000; --red-dk:#890000; --black:#1A1A1A; --ink:#262626;
@@ -87,6 +87,9 @@
   .note{font-size:12.5px;color:var(--muted)}
   .exports{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
   .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+    .sitenav{border:1.5px solid var(--red);border-radius:10px;background:#fff;padding:12px 18px;margin-bottom:18px}
+  .sitenav p{margin:5px 0;font-size:14.5px}
+  .sitenav .here{font-weight:700;color:var(--red-dk)}
   footer{margin-top:30px;font-size:12px;color:var(--muted);border-top:1px solid var(--gray-lt);padding-top:14px}
   /* Print */
   @media print{
@@ -109,8 +112,14 @@
       <h1>Interview Scorecard</h1>
     </div>
   </div>
-  <div class="sub">Structured, competency-based interviewing for MBA-level roles. Select a role and stage, load your employer question pack, and score against the behavioral anchors — evidence over opinion. <a href="student_playbook.html">Candidates: see the Interview Prep Playbook</a>.</div>
+  <div class="sub">Structured, competency-based interviewing for MBA-level roles. Select a role and stage, load your employer question pack, and score against the behavioral anchors — evidence over opinion.</div>
 </header>
+
+<nav class="sitenav" aria-label="Toolkit navigation">
+  <p class="here">Interviewers: you are in the &lsquo;Interview Scorecard&rsquo;. &mdash; you&rsquo;re here.</p>
+  <p><a href="student_playbook.html"><b>Candidates: click to open the &lsquo;Prep Playbook&rsquo;.</b></a></p>
+  <p><a href="mock_interview.html"><b>Candidates: click to open the &lsquo;Mock Interview Lifecycle&rsquo;.</b></a></p>
+</nav>
 
 <section class="card accent" aria-labelledby="setupH">
   <h2 id="setupH">Interview setup</h2>
@@ -134,7 +143,7 @@
     <button class="btn primary" id="packBtn" type="button">Load question pack</button>
     <input type="file" id="packFile" accept=".json" class="sr-only" aria-label="Load employer question pack (JSON file)">
     <span id="packStatus" class="chip warn">No pack loaded — questions hidden</span>
-    <span class="note">The question pack is a confidential employer file provided by Full-Time MBA Program · David Eccles School of Business Career Services. This public page contains the framework and rubric only.</span>
+    <span class="note">The question pack is a confidential employer file provided by Eccles Career Services. This public page contains the framework and rubric only.</span>
   </div>
 </section>
 
@@ -170,7 +179,7 @@
 </div>
 
 <footer>
-  Full-Time MBA Program · David Eccles School of Business Structured Interview Toolkit · Interview Scorecard v1.0 · This tool implements the framework in the <em>Employer Edition</em> guide (4-point behaviorally anchored scale; gate rules; percentage thresholds). It is an adaptable framework, not a certification — hiring decisions and compliance remain with the employer. © University of Utah, Full-Time MBA Program · David Eccles School of Business.
+  Eccles MBA Structured Interview Toolkit · Interview Scorecard v1.0 · This tool implements the framework in the <em>Employer Edition</em> guide (4-point behaviorally anchored scale; gate rules; percentage thresholds). It is an adaptable framework, not a certification — hiring decisions and compliance remain with the employer. © University of Utah, David Eccles School of Business.
 </footer>
 
 </div>
@@ -187,7 +196,7 @@ const BARS = [
 const DEVMAP = {1:"Advanced Beginner (1–2)",2:"Competent (3–5)",3:"Proficient (6–8)",4:"Expert (9–10)"};
 
 const DEFS = {
-  // Full-Time MBA Program · David Eccles School of Business Competency Model (src: mba)
+  // Eccles MBA Competency Model (src: mba)
   "Strategic Alignment":{src:"mba",code:"SCT 1",def:"Develop action plans that align with organizational goals and strategic priorities."},
   "Strategic Planning":{src:"mba",code:"SCT 2",def:"Use strategic planning and critical thinking to discern among alternatives and devise recommendations."},
   "Comprehensive Analysis":{src:"mba",code:"SCT 3",def:"Analyze complex situations by identifying and accounting for controllable and uncontrollable factors."},
@@ -403,8 +412,8 @@ function renderSummary(){
 function buildText(){
   const r = ROLES[state.role]; const rows = currentScores();
   const L = [];
-  L.push("Full-Time MBA Program · David Eccles School of Business STRUCTURED INTERVIEW — SCORECARD");
-  L.push("University of Utah — Full-Time MBA Program · David Eccles School of Business");
+  L.push("ECCLES MBA STRUCTURED INTERVIEW — SCORECARD");
+  L.push("University of Utah — David Eccles School of Business");
   L.push("═".repeat(56));
   L.push(`Candidate: ${state.cand||"—"}   Interviewer: ${state.ivr||"—"}   Date: ${state.date}`);
   L.push(`Role: ${r.label}   Stage: ${STAGE_LABEL[state.stage]}`);
