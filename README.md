@@ -33,6 +33,20 @@ eccles_question_pack.json
 2. Settings → Pages → deploy from the main branch.
 3. Send `eccles_question_pack.json` to employer partners directly (email or secure share). Each interviewer clicks **Load question pack** at the start of a session. The tool is fully usable without the pack (rubric, scoring, gates, exports) — only question text is withheld.
 
+---
+
+## Distributing the question pack (chain of custody)
+ 
+The pack travels person-to-person, never through this repo. GitHub's web upload ignores `.gitignore`, so the protection is the protocol, not the file:
+ 
+1. **Master copy** lives in Full-Time MBA Program · David Eccles School of Business Career Services cloud storage (Box / Google Drive / OneDrive), access-scoped to career services staff. Upload the `.json` file as-is; never convert it to a Docs/Word format — converted copies will not load in the scorecard.
+2. **Full-Time MBA Program · David Eccles School of Business → employer:** when an employer partner adopts the toolkit, Career Services sends the current pack to the employer's recruiting or HR lead — email attachment or a share link scoped to them.
+3. **Employer lead → interviewers:** the recruiting/HR lead forwards the file to their interviewers directly (email or their own access-controlled drive — never a public intranet page or wiki), with this instruction: *"Save this file anywhere on your computer. In the scorecard, click **Load question pack** and select it — it loads locally in your browser and is never uploaded anywhere."*
+4. **On rotation:** Career Services sends the new version to employer leads and asks them to delete prior copies; the retired version's questions are published in the student playbook (see lifecycle above).
+If the pack is ever posted anywhere public, treat it as a rotation trigger — retire, publish, reissue — not an emergency.
+
+---
+
 ## Question-pack lifecycle
 
 The pack rotates. Each version lives one of two lives, in order:
