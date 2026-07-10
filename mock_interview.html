@@ -92,9 +92,9 @@
 </header>
 
 <nav class="sitenav" aria-label="Toolkit navigation">
-  <p><span class="who">INTERVIEWER SIDE</span><br><a href="index.html"><b>Interview Scorecard</b></a><span class="desc">The live tool employers score you with — the rubric, evidence notes, and gate rules. Worth exploring: it&rsquo;s exactly what you&rsquo;re preparing for. (Questions load from each employer&rsquo;s private pack.)</span></p>
-  <p><span class="who">YOUR SIDE</span><br><a href="student_playbook.html"><b>Prep Playbook</b></a><span class="desc">Your side of the table: the rubric, role maps, the retired question bank, and AI coaching.</span></p>
-  <p><span class="who">PUT IT TOGETHER</span><br><span class="here">Mock Interview Lifecycle &mdash; you&rsquo;re here</span><span class="desc">Where it all comes together: run all four stages and get scored the way an employer scores you.</span></p>
+  <p><span class="who">INTERVIEWER SIDE</span><br><a href="index.html"><b>Interview Scorecard</b></a><span class="desc">The live scoring tool: rubric, evidence notes, and gate rules. Interviewers load their organization&rsquo;s confidential question pack; candidates are encouraged to explore it &mdash; transparency is the design.</span></p>
+  <p><span class="who">CANDIDATE SIDE</span><br><a href="student_playbook.html"><b>Prep Playbook</b></a><span class="desc">The candidate&rsquo;s preparation hub: the rubric, role maps, the retired question bank, and AI coaching.</span></p>
+  <p><span class="who">FULL SIMULATION</span><br><span class="here">Mock Interview Lifecycle &mdash; you&rsquo;re here</span><span class="desc">Where it comes together: all four stages, scored on the same rubric and thresholds employers use.</span></p>
 </nav>
 
 <section class="card accent">
@@ -110,21 +110,6 @@
 
 <section class="card" id="stagePanel"></section>
 
-<section class="card" id="progress">
-  <h2>Progress tracker</h2>
-  <p class="note">Your private practice log — it lives only in this browser and certifies nothing. The <b>trend</b> is the signal; single sessions are noise. Stage runs save from each stage tab and trend on that tab’s sparkline; this chart records complete four-stage mocks only. Export a backup now and then: clearing browser data erases this history.</p>
-  <div class="rowbtns">
-    <button class="btn primary" id="saveRun" type="button">Save complete mock</button>
-    <span class="note" id="saveHint"></span>
-  </div>
-  <div id="progOut"></div>
-  <div class="rowbtns">
-    <button class="btn" id="expProg" type="button">Export backup</button>
-    <button class="btn" id="impProg" type="button">Import backup</button>
-    <input type="file" id="impFile" accept=".json" class="sr-only" aria-label="Import progress backup file" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">
-  </div>
-</section>
-
 <section class="card" id="debrief">
   <h2>Lifecycle debrief</h2>
   <div id="overall"></div>
@@ -137,6 +122,21 @@
   </div>
   <pre id="debriefOut" hidden></pre>
   <p class="note">Answers and logged scores autosave to this browser only; your progress log is stored separately, so “Clear current mock” never touches the chart. Audio recordings live in memory for this session and are never saved or uploaded. Voice transcription uses your browser's built-in speech service (in Chrome, audio is processed by Google); typing always works everywhere.</p>
+</section>
+
+<section class="card" id="progress" hidden>
+  <h2>Progress tracker</h2>
+  <p class="note">Your private practice log — it lives only in this browser and certifies nothing. The <b>trend</b> is the signal; single sessions are noise. Stage runs save from each stage tab and trend on that tab’s sparkline; this chart records complete four-stage mocks only. Export a backup now and then: clearing browser data erases this history.</p>
+  <div class="rowbtns">
+    <button class="btn primary" id="saveRun" type="button">Save complete mock</button>
+    <span class="note" id="saveHint"></span>
+  </div>
+  <div id="progOut"></div>
+  <div class="rowbtns">
+    <button class="btn" id="expProg" type="button">Export backup</button>
+    <button class="btn" id="impProg" type="button">Import backup</button>
+    <input type="file" id="impFile" accept=".json" class="sr-only" aria-label="Import progress backup file" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">
+  </div>
 </section>
 
 <footer>
@@ -274,6 +274,7 @@ function renderStage(){
     <span class="note" id="promptHint">${qs.filter((_,i)=>d.answers[i]&&d.answers[i].trim()).length}/${qs.length} answered</span></div>
   <pre id="stagePromptOut" hidden></pre>` + stageTrackerHTML();
   $("stagePanel").innerHTML = html;
+  $("progress").hidden = state.stage!=="final";
   renderTabs(); renderOverall();
 }
 
@@ -491,19 +492,29 @@ function fullSnapshot(){
     gates:[...new Set(gates)] };
 }
 
-// shared chart builder: pts=[{v,title,solid}], compact=true for sparklines
+// shared chart builder on the 1–4 rubric axis: pts=[{v: pct, title}], compact=true for sparklines
 function chartSVG(pts, compact){
-  const W=compact?300:640, H=compact?84:200, padL=compact?26:34, padR=8, padT=6, padB=compact?6:24;
+  const W=compact?300:640, H=compact?90:210, padL=compact?20:30, padR=compact?8:104, padT=8, padB=compact?8:22;
   const x=i=>pts.length===1?(padL+(W-padL-padR)/2):padL+i*(W-padL-padR)/(pts.length-1);
-  const y=v=>padT+(100-v)*(H-padT-padB)/100;
+  const y=a=>padT+(4-a)*(H-padT-padB)/3;            // score axis 1.0–4.0
+  const A=p=>p/25;                                   // pct → avg score
   let s=`<svg viewBox="0 0 ${W} ${H}" role="img" style="width:100%;max-width:${W}px;height:auto;display:block">`;
-  [[80,100,"#EDF3E6"],[70,80,"#F7F3E2"],[60,70,"#FBF3E8"],[0,60,"#FBF3F3"]].forEach(([a,b,c])=>{
+  // threshold bands in score space: 3.2+, 2.8–3.2, 2.4–2.8, below 2.4
+  [[3.2,4,"#EDF3E6"],[2.8,3.2,"#F7F3E2"],[2.4,2.8,"#FBF3E8"],[1,2.4,"#FBF3F3"]].forEach(([a,b,c])=>{
     s+=`<rect x="${padL}" y="${y(b)}" width="${W-padL-padR}" height="${y(a)-y(b)}" fill="${c}"/>`;});
-  [60,70,80].forEach(v=>{s+=`<line x1="${padL}" x2="${W-padR}" y1="${y(v)}" y2="${y(v)}" stroke="#E2E6E6" stroke-width="1"/><text x="2" y="${y(v)+3.5}" font-size="${compact?8:10}" fill="#6B6B6B">${v}</text>`;});
-  if(pts.length>1) s+=`<path d="${pts.map((p,i)=>`${i?"L":"M"}${x(i)},${y(p.v)}`).join(" ")}" fill="none" stroke="#CC0000" stroke-width="2"/>`;
-  pts.forEach((p,i)=>{ s+= p.solid!==false
-    ? `<circle cx="${x(i)}" cy="${y(p.v)}" r="${compact?3.2:4.5}" fill="#CC0000"><title>${p.title}</title></circle>`
-    : `<circle cx="${x(i)}" cy="${y(p.v)}" r="${compact?3.2:4.5}" fill="#fff" stroke="#CC0000" stroke-width="2"><title>${p.title}</title></circle>`;});
+  // gridlines: halves light, wholes labeled
+  [1.5,2.5,3.5].forEach(v=>{s+=`<line x1="${padL}" x2="${W-padR}" y1="${y(v)}" y2="${y(v)}" stroke="#EFEFEF" stroke-width="1"/>`;});
+  [1,2,3,4].forEach(v=>{s+=`<line x1="${padL}" x2="${W-padR}" y1="${y(v)}" y2="${y(v)}" stroke="#E2E6E6" stroke-width="1"/><text x="2" y="${y(v)+3.5}" font-size="${compact?9:11}" fill="#6B6B6B">${v}</text>`;});
+  // employer threshold lines (dashed), labeled on the full chart
+  [[3.2,"3.2 · 80% advance"],[2.8,"2.8 · 70% discuss"],[2.4,"2.4 · 60% floor"]].forEach(([v,lab])=>{
+    s+=`<line x1="${padL}" x2="${W-padR}" y1="${y(v)}" y2="${y(v)}" stroke="#B08A8A" stroke-width="1" stroke-dasharray="4 3"/>`;
+    if(!compact) s+=`<text x="${W-padR+6}" y="${y(v)+3.5}" font-size="10.5" fill="#890000">${lab}</text>`;});
+  if(pts.length>1) s+=`<path d="${pts.map((p,i)=>`${i?"L":"M"}${x(i)},${y(A(p.v))}`).join(" ")}" fill="none" stroke="#CC0000" stroke-width="2"/>`;
+  pts.forEach((p,i)=>{ s+=`<circle cx="${x(i)}" cy="${y(A(p.v))}" r="${compact?3.2:4.5}" fill="#CC0000"><title>${p.title}</title></circle>`;});
+  if(!compact && pts.length){
+    s+=`<text x="${padL}" y="${H-6}" font-size="10" fill="#6B6B6B">${pts[0].date||""}</text>`;
+    if(pts.length>1) s+=`<text x="${W-padR}" y="${H-6}" font-size="10" fill="#6B6B6B" text-anchor="end">${pts[pts.length-1].date||""}</text>`;
+  }
   return s+"</svg>";
 }
 
@@ -512,16 +523,17 @@ function stageTrackerHTML(){
   const runs = p.stageRuns.filter(r=>r.role===state.role && r.stage===state.stage);
   const snap = stageSnapshot(state.stage);
   const show = runs.slice(-12);
+  const fmt = pct => (pct/25).toFixed(1)+" avg ("+pct+"%)";
   let inner;
   if(!runs.length) inner = `<p class="note" style="margin:6px 0 0">No saved runs of this stage yet${snap?"":" — score every question above to save your first"}.</p>`;
   else {
-    const last=runs[runs.length-1].pct, best=Math.max(...runs.map(r=>r.pct));
-    inner = chartSVG(show.map(r=>({v:r.pct,title:`${r.date} · ${r.pct}%`})),true)
-      + `<p class="note" style="margin:4px 0 0">${runs.length} run${runs.length>1?"s":""} of this stage (${ROLES[state.role].label}) · last ${last}% · best ${best}%</p>`;
+    inner = chartSVG(show.map(r=>({v:r.pct,title:`${r.date} · ${fmt(r.pct)}`})),true)
+      + `<p class="note" style="margin:4px 0 0">${runs.length} run${runs.length>1?"s":""} of this stage (${ROLES[state.role].label}) · last ${fmt(runs[runs.length-1].pct)} · best ${fmt(Math.max(...runs.map(r=>r.pct)))}</p>`;
   }
+  const signpost = state.stage!=="final" ? `<p class="note" style="margin:6px 0 0"><b>Full-mock chart and competency trends live on the Final stage tab.</b></p>` : "";
   return `<div class="chartwrap" style="margin-top:16px"><b style="font-size:13.5px;color:var(--red-dk)">Stage tracker — ${STAGE_LABEL[state.stage]}</b>
     <div class="rowbtns" style="margin:6px 0 4px"><button class="btn small primary" id="saveStage" type="button" ${snap?"":"disabled"}>Save this stage run</button>
-    <span class="note">${snap?"":"Score all questions in this stage to save."}</span></div>${inner}</div>`;
+    <span class="note">${snap?"":"Score all questions in this stage to save."}</span></div>${inner}${signpost}</div>`;
 }
 
 function renderProgress(){
@@ -535,8 +547,8 @@ function renderProgress(){
     html += `<p class="note">No complete mocks yet. Stage runs build the sparklines on each stage tab; your first full four-stage mock starts this chart.</p>`;
   } else {
     const show = full.slice(-20);
-    html += `<div class="chartwrap">${chartSVG(show.map(r=>({v:r.overall,title:`${r.date} · ${r.roleLabel} · ${r.overall}%`})),false)}
-      <p class="note" style="margin:4px 0 0">Complete four-stage mocks only — ${full.length} on record. Bands are the employer thresholds (60/70/80).</p></div>`;
+    html += `<div class="chartwrap">${chartSVG(show.map(r=>({v:r.overall,date:r.date,title:`${r.date} · ${r.roleLabel} · ${(r.overall/25).toFixed(1)} avg (${r.overall}%)`})),false)}
+      <p class="note" style="margin:4px 0 0">Complete four-stage mocks only — ${full.length} on record. Axis is the 1–4 rubric average; dashed lines are the employer thresholds.</p></div>`;
   }
   // per-competency table across BOTH layers, chronological
   const events = [...p.stageRuns, ...full].sort((a,b)=>a.ts-b.ts);
