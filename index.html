@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Interview Scorecard — Eccles MBA Structured Interview Toolkit</title>
+<title>Interview Scorecard — Full-Time MBA Program · David Eccles School of Business Structured Interview Toolkit</title>
 <style>
   :root{
     --red:#CC0000; --red-dk:#890000; --black:#1A1A1A; --ink:#262626;
@@ -105,7 +105,7 @@
   <div class="brandrow">
     <div class="ublock" aria-hidden="true">U</div>
     <div>
-      <div class="eyebrow">David Eccles School of Business — Full-Time MBA</div>
+      <div class="eyebrow">Full-Time MBA Program · David Eccles School of Business</div>
       <h1>Interview Scorecard</h1>
     </div>
   </div>
@@ -134,7 +134,7 @@
     <button class="btn primary" id="packBtn" type="button">Load question pack</button>
     <input type="file" id="packFile" accept=".json" class="sr-only" aria-label="Load employer question pack (JSON file)">
     <span id="packStatus" class="chip warn">No pack loaded — questions hidden</span>
-    <span class="note">The question pack is a confidential employer file provided by Eccles Career Services. This public page contains the framework and rubric only.</span>
+    <span class="note">The question pack is a confidential employer file provided by Full-Time MBA Program · David Eccles School of Business Career Services. This public page contains the framework and rubric only.</span>
   </div>
 </section>
 
@@ -170,7 +170,7 @@
 </div>
 
 <footer>
-  Eccles MBA Structured Interview Toolkit · Interview Scorecard v1.0 · This tool implements the framework in the <em>Employer Edition</em> guide (4-point behaviorally anchored scale; gate rules; percentage thresholds). It is an adaptable framework, not a certification — hiring decisions and compliance remain with the employer. © University of Utah, David Eccles School of Business.
+  Full-Time MBA Program · David Eccles School of Business Structured Interview Toolkit · Interview Scorecard v1.0 · This tool implements the framework in the <em>Employer Edition</em> guide (4-point behaviorally anchored scale; gate rules; percentage thresholds). It is an adaptable framework, not a certification — hiring decisions and compliance remain with the employer. © University of Utah, Full-Time MBA Program · David Eccles School of Business.
 </footer>
 
 </div>
@@ -187,7 +187,7 @@ const BARS = [
 const DEVMAP = {1:"Advanced Beginner (1–2)",2:"Competent (3–5)",3:"Proficient (6–8)",4:"Expert (9–10)"};
 
 const DEFS = {
-  // Eccles MBA Competency Model (src: mba)
+  // Full-Time MBA Program · David Eccles School of Business Competency Model (src: mba)
   "Strategic Alignment":{src:"mba",code:"SCT 1",def:"Develop action plans that align with organizational goals and strategic priorities."},
   "Strategic Planning":{src:"mba",code:"SCT 2",def:"Use strategic planning and critical thinking to discern among alternatives and devise recommendations."},
   "Comprehensive Analysis":{src:"mba",code:"SCT 3",def:"Analyze complex situations by identifying and accounting for controllable and uncontrollable factors."},
@@ -403,8 +403,8 @@ function renderSummary(){
 function buildText(){
   const r = ROLES[state.role]; const rows = currentScores();
   const L = [];
-  L.push("ECCLES MBA STRUCTURED INTERVIEW — SCORECARD");
-  L.push("University of Utah — David Eccles School of Business");
+  L.push("Full-Time MBA Program · David Eccles School of Business STRUCTURED INTERVIEW — SCORECARD");
+  L.push("University of Utah — Full-Time MBA Program · David Eccles School of Business");
   L.push("═".repeat(56));
   L.push(`Candidate: ${state.cand||"—"}   Interviewer: ${state.ivr||"—"}   Date: ${state.date}`);
   L.push(`Role: ${r.label}   Stage: ${STAGE_LABEL[state.stage]}`);
