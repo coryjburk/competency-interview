@@ -21,6 +21,7 @@ Public site for the **Structured Interview Toolkit** — Full-Time MBA Program �
 | `Eccles_MBA_Interview_Prep_Student_Overview.pptx` | Yes | Student overview deck with speaker notes. Linked from the playbook. |
 | `mock_interview.html` | Yes | Student mock-interview lifecycle: 4 stages, speech-to-text answers, per-stage AI coaching prompts, score logging with gates/thresholds, final debrief export. |
 | `retired_bank.js` | Yes | **Single source of truth** for retired questions, competency definitions, and role maps — loaded by both `student_playbook.html` and `mock_interview.html`. Edit this one file when a pack rotates. |
+| `Eccles_MBA_Mock_Interview_Coach_Brief.docx` | Yes | One-page brief for career coaches: how to read a student's mock-interview summary. Linked from the coach export. |
 | `README.md` | Yes | This file. |
 
 **Why the split:** the student-facing edition of the framework deliberately shares competencies and rubrics but not verbatim questions. Publishing the pack on a public page would defeat that. Interviewers load the pack locally via the **Load question pack** button — the file never leaves their machine.

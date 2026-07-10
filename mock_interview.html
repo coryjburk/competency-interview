@@ -379,6 +379,7 @@ function buildCoachExport(){
   const all=STAGES.flatMap(st=>{const s=stageStats(st);return s? s.qs.map((_,i)=>s.d.scores[i]).filter(Boolean):[];});
   if(all.length) L.push(`Overall: ${Math.round(100*all.reduce((a,b)=>a+b,0)/(all.length*4))}% across ${all.length} scored answers`);
   L.push(""); L.push("Scores are AI-coached practice scores on the official 4-point rubric (retired question bank). Bring-up items: gates triggered, competencies scoring 2 or below, story-bank gaps.");
+  L.push("Coach's one-page reading guide: https://coryjburk.github.io/competency-interview/Eccles_MBA_Mock_Interview_Coach_Brief.docx");
   return L.join("\n");
 }
 
