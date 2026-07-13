@@ -116,16 +116,16 @@
 </section>
 
 <section class="card">
-  <h2>Building answers: STAR/CAR + R</h2>
-  <p>Structure every story in five beats. The fifth is where 3s become 4s — and most candidates skip it.</p>
+  <h2>Building answers: the CARL framework</h2>
+  <p>CARL is the storytelling framework taught in your careers class — structure every story in four beats. The fourth is where 3s become 4s, and most candidates skip it.</p>
   <table>
     <tr><th style="width:22%">Beat</th><th>What to say</th></tr>
-    <tr><td><b>S</b>ituation</td><td>One or two sentences of context. Resist the urge to give five.</td></tr>
-    <tr><td><b>T</b>ask</td><td>What <i>you</i> specifically were responsible for — not the team's mission statement.</td></tr>
-    <tr><td><b>A</b>ction</td><td>What you did, in first person singular. "We" answers get probed until an "I" appears; volunteer it first.</td></tr>
-    <tr><td><b>R</b>esult</td><td>Outcome with a number where you have one. A miss honestly accounted for beats a vague win.</td></tr>
-    <tr><td><b>+ R</b>eflection</td><td>What you learned and where you've applied it since. This is the "repeatable method" signal in the 4 anchor.</td></tr>
+    <tr><td><b>C</b>ontext / Challenge</td><td>What challenge were you facing, for whom, and why did it matter? Two to three sentences — spend your time on Action and Results, not scene-setting.</td></tr>
+    <tr><td><b>A</b>ction</td><td>What <i>you</i> did, in first person singular, with specifics. "We" answers get probed until an "I" appears; volunteer it first.</td></tr>
+    <tr><td><b>R</b>esults</td><td>The outcome and its impact on the business — with metrics or data wherever you have them. A miss honestly accounted for beats a vague win.</td></tr>
+    <tr><td><b>L</b>earning</td><td>What you learned — about yourself, the work, or people — and how you've used it since. If the result wasn't positive, what you'd do differently. This is the "repeatable method" signal in the 4 anchor.</td></tr>
   </table>
+  <p><b>Tell, then Show:</b> answer the question directly first, <i>then</i> bring it to life with the CARL story. And for variety, some answers land harder led with the Result: "We cut wait times in half — here's how."</p>
   <p>Build a bank of <b>8–10 stories</b> covering your target role's competencies, and know which story serves which competency. Expect probes — "what did you do next," "what was the result in numbers," "what would you do differently" — and welcome them: probes are the interviewer giving you a path to a higher score.</p>
 </section>
 
@@ -153,7 +153,7 @@
 
 <section class="card">
   <h2>Downloads</h2>
-  <p><a href="Eccles_MBA_Interview_Prep_Guide_Student_Edition.docx"><b>Interview Prep Guide (Word)</b></a> — the method in full: rubric, stages, STAR/CAR+R, the story-bank matrix, and five worked weak-vs-strong answer pairs for self-calibration.</p>
+  <p><a href="Eccles_MBA_Interview_Prep_Guide_Student_Edition.docx"><b>Interview Prep Guide (Word)</b></a> — the method in full: rubric, stages, the CARL framework, the story-bank matrix, and five worked weak-vs-strong answer pairs for self-calibration.</p>
   <p><a href="Eccles_MBA_Interview_Prep_Student_Overview.pptx"><b>Student Overview Deck (PowerPoint)</b></a> — the session deck, with full speaker notes on every slide so it reads standalone.</p>
 </section>
 
@@ -206,10 +206,10 @@ ${comp}: ${d.def}
 
 HOW TO RUN THE SESSION
 ${step1}
-2. Probe like a trained interviewer: establish the Situation, my personal Action (redirect "we" to "I"), the measurable Result, and my Reflection. Probe without leading — never suggest the answer.
+2. Probe like a trained interviewer: establish the Context/Challenge, my personal Actions (redirect "we" to "I"), the measurable Results, and my Learning — the CARL framework I'm taught. Probe without leading — never suggest the answer.
 3. Then ask ONE situational question of your own design: a realistic scenario with a constraint where this competency is the deciding factor. Wait for my answer.
 4. Score each answer separately on the rubric below, quoting the specific evidence from my answer that justifies the score.
-5. Coach me: name the single change that would most raise each score one level, and point out any red-flag patterns (vagueness, no ownership, no numbers, no reflection, blaming, one story stretched thin).
+5. Coach me: name the single change that would most raise each score one level, and point out any red-flag patterns (vagueness, no ownership, no numbers, no Learning, blaming, one story stretched thin).
 6. Offer to re-run the same question so I can apply the coaching.
 
 SCORING RUBRIC (use exactly this scale)
@@ -247,25 +247,29 @@ function renderBank(){
     const comps = [...new Set(Object.values(r.stages).flat())];
     out += `<div class="stageblock"><div class="stagehead">Screen-stage motivation questions — ${esc(r.label)}</div><div class="stagebody">` +
       (RETIRED_SCREENS[rid]||[]).map(q=>`<p style="margin:6px 0">${esc(q)}</p>`).join("") + `</div></div>`;
-    out += comps.map(c=>bankComp(c, r.gates.includes(c))).join("");
+    const ov = (typeof ROLE_QUESTION_OVERRIDES!=="undefined" && ROLE_QUESTION_OVERRIDES[rid]) || null;
+    out += comps.map(c=>bankComp(c, r.gates.includes(c), ov)).join("");
   } else {
     out += Object.keys(RETIRED).sort().map(c=>bankComp(c,false)).join("");
   }
   $("bankOut").innerHTML = out;
 }
-function bankComp(c, gate){
-  const qs = RETIRED[c]; if(!qs) return "";
+function bankComp(c, gate, ov){
+  const qs = (ov && ov[c]) || RETIRED[c]; if(!qs) return "";
   const d = DEFS[c];
   const kinds = ["Behavioral","Behavioral","Situational"];
+  const okinds = ["Behavioral","Behavioral","Behavioral"];
   return `<div class="stageblock"><div class="stagehead">${esc(c)}${gate?' <span class="chip gate">Gate</span>':""} <span class="chip ${d.src==="mba"?"mba":"role"}">${d.src==="mba"?"MBA Model":"Role"}</span></div><div class="stagebody">` +
-    qs.map((q,i)=>`<p style="margin:8px 0">${esc(q)}<br><button class="btn" style="margin-top:4px;font-size:12.5px;padding:5px 12px" data-pq="${esc(c)}|${i}" type="button">Practice with AI — ${kinds[i]}</button></p>`).join("") +
+    qs.map((q,i)=>`<p style="margin:8px 0">${esc(q)}<br><button class="btn" style="margin-top:4px;font-size:12.5px;padding:5px 12px" data-pq="${esc(c)}|${i}" type="button">Practice with AI — ${(ov&&ov[c]?okinds:kinds)[i]}</button></p>`).join("") +
     `</div></div>`;
 }
 document.addEventListener("click", e=>{
   const b = e.target.closest("[data-pq]"); if(!b) return;
   const [c,i] = b.dataset.pq.split("|");
   $("coachComp").value = c;
-  coachExactQ = RETIRED[c][+i];
+  const rid = $("bankRole").value;
+  const ov = (typeof ROLE_QUESTION_OVERRIDES!=="undefined" && ROLE_QUESTION_OVERRIDES[rid]) || null;
+  coachExactQ = ((ov && ov[c]) || RETIRED[c])[+i];
   $("promptOut").textContent = buildPrompt();
   $("promptOut").hidden = false; $("copyPrompt").hidden = false;
   if($("promptOut").scrollIntoView) $("promptOut").scrollIntoView({behavior:"smooth", block:"center"});

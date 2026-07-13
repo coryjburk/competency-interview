@@ -171,8 +171,9 @@ function questionsFor(role, stage, variants){
   if(stage==="screen"){
     (RETIRED_SCREENS[role]||[]).forEach((q,i)=>out.push({q, comp:null, label:"Role motivation "+(i+1), gate:false, kind:"Motivation", fixed:true}));
   }
+  const OV = (typeof ROLE_QUESTION_OVERRIDES!=="undefined" && ROLE_QUESTION_OVERRIDES[role]) || {};
   r.stages[stage].forEach((comp,ci)=>{
-    const set = RETIRED[comp]||[];
+    const set = OV[comp] || RETIRED[comp] || [];
     const v = (variants && variants[ci])||0;
     const kinds = ["Behavioral","Behavioral (alt)","Situational"];
     out.push({q:set[v%3], comp, label:comp, gate:r.gates.includes(comp), kind:kinds[v%3], ci});
@@ -255,7 +256,7 @@ function renderStage(){
           <span data-audio="${i}"></span>
         </div>
         <label for="a${i}">Your answer</label>
-        <textarea id="a${i}" data-idx="${i}" placeholder="Speak or type — aim for STAR + Reflection: situation, your task, your actions (\u201CI\u201D), the result with a number, and what you learned.">${esc(d.answers[i]||"")}</textarea>
+        <textarea id="a${i}" data-idx="${i}" placeholder="Speak or type — aim for CARL: the Context/Challenge in 2\u20133 sentences, your Actions (\u201CI\u201D), the Results with a number, and the Learning.">${esc(d.answers[i]||"")}</textarea>
         <div class="scorelog"><span class="note" style="font-weight:700">Log the AI's score:</span>
           ${[1,2,3,4].map(v=>`<button class="sbtn" data-score="${i}|${v}" aria-pressed="${sc===v}" aria-label="score ${v}">${v}</button>`).join("")}
           ${sc?`<span class="note">${sc===1&&it.gate?'<b style="color:var(--red-dk)">gate triggered</b>':""}</span>`:""}
@@ -287,9 +288,9 @@ function buildStagePrompt(){
   L.push("SCORING RUBRIC (use exactly this scale)"); L.push(BARS_TEXT); L.push("");
   L.push("FOR EACH ANSWER BELOW:");
   L.push("1. Score it 1-4, quoting the specific phrases from my answer that justify the score.");
-  L.push("2. Check STAR+R completeness: situation, my personal actions (\u201CI\u201D vs \u201Cwe\u201D), a measurable result, and a reflection.");
+  L.push("2. Check CARL completeness (the framework I\u2019m taught): Context/Challenge set briefly, my personal Actions (\u201CI\u201D vs \u201Cwe\u201D), measurable Results, and a Learning. Also check the Tell-then-Show technique: did I answer the question directly first, then tell the story?");
   L.push("3. Name the single change that would raise the score one level.");
-  L.push("4. Flag red-flag patterns: vagueness, no ownership, no numbers, no reflection, blaming, or an answer that dodges the question.");
+  L.push("4. Flag red-flag patterns: vagueness, no ownership, no numbers, no Learning, blaming, or an answer that dodges the question.");
   L.push("");
   L.push("THEN, AFTER ALL ANSWERS: give the stage total as a percentage of available points (each answer out of 4), and state whether any GATEKEEPER answer scored a 1 — in a real process that ends the candidacy regardless of total.");
   L.push(DEVLINE);
@@ -360,8 +361,8 @@ function buildDebriefPrompt(){
   });
   L.push("DEBRIEF ME:");
   L.push("1. My three strongest competencies on this evidence, and why.");
-  L.push("2. My three weakest — especially any gatekeeper that scored a 1 — and what specifically is missing (ownership? numbers? reflection? story choice?).");
-  L.push("3. Patterns across stages: am I reusing stories, defaulting to \u201Cwe\u201D, skipping reflection, or padding context?");
+  L.push("2. My three weakest — especially any gatekeeper that scored a 1 — and what specifically is missing (ownership? numbers? Learning? story choice?).");
+  L.push("3. Patterns across stages: am I reusing stories, defaulting to \u201Cwe\u201D, skipping the Learning, or over-explaining Context?");
   L.push("4. A concrete two-week practice plan: which stories to rebuild, which retired-bank questions to re-run, in what order.");
   L.push("5. My readiness call, straight: ready to interview / ready with targeted work / not yet — and the single highest-leverage fix.");
   return L.join("\n");
