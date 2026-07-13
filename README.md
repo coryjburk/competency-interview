@@ -1,4 +1,4 @@
-# Full-Time MBA Program · David Eccles School of Business — Interview Toolkit (Public Site)
+# Full-Time MBA Program · David Eccles School of Business — Competency Interview Toolkit
 
 Public site for the **Structured Interview Toolkit** — Full-Time MBA Program · David Eccles School of Business. Interviewer scorecard, student prep playbook, mock interview lifecycle, and shared retired question bank. Single static HTML file — no server, no build step, no dependencies.
 
