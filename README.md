@@ -2,6 +2,12 @@
 
 Public site for the **Structured Interview Toolkit** — Full-Time MBA Program · David Eccles School of Business. Interviewer scorecard, student prep playbook, mock interview lifecycle, and shared retired question bank. Single static HTML file — no server, no build step, no dependencies.
 
+---
+
+**▶ Live tool:** **[Intv Playbook - OSC_vC](https://coryjburk.github.io/competency-interview/))**
+
+---
+
 ## What it does
 
 - **Role dropdown** — 10 common MBA roles, each mapped to 5–7 competencies drawn from the Eccles MBA Competency Model and the role competency menu.
