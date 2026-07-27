@@ -192,4 +192,6 @@ Adaptable framework, not a certification. Hiring decisions — and legal/HR comp
 
 ---
 
-Adaptable framework, not a certification. Hiring decisions — and legal/HR compliance for them — remain with Cory Burk and the Full-Time MBA Program · David Eccles School of Business.
+_Adaptable framework, not a certification. Hiring decisions — and legal and HR compliance for them - remain entirely with the employer.
+Developed by Cory Burk, Senior Manager, Program Management · Full-Time MBA Program · David Eccles School of Business.
+© 2026 University of Utah, David Eccles School of Business. All rights reserved._
