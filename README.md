@@ -4,7 +4,7 @@ Public site for the **Structured Interview Toolkit** — Full-Time MBA Program �
 
 ---
 
-**▶ Live tool:** **[Intv Playbook - OSC_vC](https://coryjburk.github.io/competency-interview/))**
+**▶ Live tool:** **[Intv Playbook - Competency Interview_vC](https://coryjburk.github.io/competency-interview/)**
 
 ---
 
@@ -73,4 +73,4 @@ Scores and candidate names autosave to `localStorage` in the interviewer's brows
 Edit `eccles_question_pack.json` — the structure is `competencies.{Name}.{b1,b2,s,probes,rf,ss}` and `screens.{roleId}[2]`. New competency sets can be generated with the Appendix D template in the Employer Edition guide; calibrate with the interview team before live use. Bump `version` when you rotate.
 
 ---
-Adaptable framework, not a certification. Hiring decisions — and legal/HR compliance for them — remain with the employer. © University of Utah, David Eccles School of Business.
+Adaptable framework, not a certification. Hiring decisions — and legal/HR compliance for them — remain with Cory Burk and the Full-Time MBA Program · David Eccles School of Business.
