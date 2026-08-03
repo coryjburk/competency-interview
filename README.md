@@ -1,6 +1,6 @@
-# Full-Time MBA Program · David Eccles School of Business — Competency Interview Toolkit
+# Full-Time MBA Program · David Eccles School of Business - Competency Interview Toolkit
 
-Public site for the **Structured Interview Toolkit** — Full-Time MBA Program · David Eccles School of Business: interviewer scorecard, student prep playbook, mock interview lifecycle, and the shared retired question bank. No server, no accounts, no cost.
+Public site for the **Structured Interview Toolkit** - Full-Time MBA Program · David Eccles School of Business: interviewer scorecard, student prep playbook, mock interview lifecycle, and the shared retired question bank. No server, no accounts, no cost.
 
 **This README has two parts:**
 - **[Part I — User Manual](#part-i--user-manual-student-edition)** — for students: how structured interviews work and how to practice for them.
