@@ -5,9 +5,9 @@ Public site for the **Structured Interview Toolkit** - Full-Time MBA Program · 
 ---
 
 **▶Live tools:** 
-· **[Prep Playbook](https://coryjburk.github.io/competency-interview/student_playbook.html)** 
-· **[Mock Interview Lifecycle](https://coryjburk.github.io/competency-interview/mock_interview.html)** 
-· **[Interview Scorecard](https://coryjburk.github.io/competency-interview/index.html)**
+- **[Prep Playbook](https://coryjburk.github.io/competency-interview/student_playbook.html)** 
+- **[Mock Interview Lifecycle](https://coryjburk.github.io/competency-interview/mock_interview.html)** 
+- **[Interview Scorecard](https://coryjburk.github.io/competency-interview/index.html)**
 
 ---
 
