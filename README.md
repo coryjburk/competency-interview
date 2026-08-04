@@ -2,17 +2,25 @@
 
 Public site for the **Structured Interview Toolkit** - Full-Time MBA Program · David Eccles School of Business: interviewer scorecard, student prep playbook, mock interview lifecycle, and the shared retired question bank. No server, no accounts, no cost.
 
+---
+
+**▶Live tools:** 
+· **[Prep Playbook](https://coryjburk.github.io/competency-interview/student_playbook.html)** 
+· **[Mock Interview Lifecycle](https://coryjburk.github.io/competency-interview/mock_interview.html)** 
+· **[Interview Scorecard](https://coryjburk.github.io/competency-interview/index.html)**
+
+---
+
 **This README has two parts:**
 - **[Part I — User Manual](#part-i--user-manual-student-edition)** — for students: how structured interviews work and how to practice for them.
 - **[Part II — Operational Documentation](#part-ii--operational-documentation)** — for staff and maintainers: files, the question-pack lifecycle, and chain of custody.
 
 ---
 
+
 # Part I — User Manual (Student Edition)
 
 *Prepare evidence, not answers.*
-
-**▶Live tools:** **[Prep Playbook](https://coryjburk.github.io/competency-interview/student_playbook.html)** · **[Mock Interview Lifecycle](https://coryjburk.github.io/competency-interview/mock_interview.html)** · **[Interview Scorecard](https://coryjburk.github.io/competency-interview/index.html)**
 
 ## 1. Structured Interviews Are Good News for You
 
